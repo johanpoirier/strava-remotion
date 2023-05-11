@@ -1,6 +1,6 @@
 export async function fetchAccessTokens(code: string): Promise<object> {
-    const clientId = '';
-    const clientSecret = '';
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
     const tokenUrl = `https://www.strava.com/oauth/token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}&grant_type=authorization_code`
     const response: Response = await fetch(tokenUrl, {method: 'POST'});
     if (!response.ok) {

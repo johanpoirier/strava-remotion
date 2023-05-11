@@ -10,7 +10,7 @@ function App({code}: {code?: string}) {
     const [activityList, setActivityList] = useState<object[]>([]);
 
     const stravaLogin = useMemo(() => {
-        if (activityList) {
+        if (activityList.length > 0) {
             return (<Activities data={activityList} />)
         }
         if (accessToken) {
@@ -27,7 +27,7 @@ function App({code}: {code?: string}) {
             return (<span>{code}</span>);
         }
         const redirectUri: string = 'http://localhost:3000/';
-        const authUrl: string = `https://www.strava.com/oauth/authorize?client_id=105673&redirect_uri=${encodeURI(redirectUri)}&response_type=code&scope=read,activity:read`;
+        const authUrl: string = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${encodeURI(redirectUri)}&response_type=code&scope=read,activity:read`;
         return (<a href={authUrl}>Login to Strava</a>);
     }, [code, accessToken, activityList]);
 
