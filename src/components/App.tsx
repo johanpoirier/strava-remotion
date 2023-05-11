@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import './App.css';
 import {Player} from '@remotion/player';
 import {HelloWorld} from '../remotion/HelloWorld';
-import {fetchAccessTokens, fetchActivities} from '../services/strava';
+import {fetchAccessTokens, fetchActivities, getAuthUrl} from '../services/strava';
 import Activities from './Activities';
 
 function App({code}: {code?: string}) {
@@ -26,9 +26,7 @@ function App({code}: {code?: string}) {
             });
             return (<span>{code}</span>);
         }
-        const redirectUri: string = 'http://localhost:3000/';
-        const authUrl: string = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${encodeURI(redirectUri)}&response_type=code&scope=read,activity:read`;
-        return (<a href={authUrl}>Login to Strava</a>);
+        return (<a href={getAuthUrl()}>Login to Strava</a>);
     }, [code, accessToken, activityList]);
 
     return (
