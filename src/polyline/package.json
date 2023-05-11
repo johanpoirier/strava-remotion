@@ -1,0 +1,12 @@
+{
+  "name": "strava-polyline",
+  "version": "0.1.0",
+  "description": "Generates PNG map of a strava run",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@mapbox/polyline": "^1.2.0",
+    "staticmaps": "^1.12.0"
+  }
+}
