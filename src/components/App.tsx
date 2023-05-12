@@ -37,7 +37,7 @@ function App({code}: {code?: string}) {
             <Player
                 component={HelloWorld}
                 inputProps={{titleText: "Strava", titleColor: "orange"}}
-                durationInFrames={120}
+                durationInFrames={900}
                 compositionWidth={640}
                 compositionHeight={480}
                 fps={30}

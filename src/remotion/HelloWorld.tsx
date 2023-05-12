@@ -1,65 +1,59 @@
-import {spring} from 'remotion';
 import {
-	AbsoluteFill,
 	interpolate,
 	Sequence,
 	useCurrentFrame,
-	useVideoConfig,
+	delayRender,
+	continueRender
 } from 'remotion';
-import {Logo} from './HelloWorld/Logo';
-import {Subtitle} from './HelloWorld/Subtitle';
-import {Title} from './HelloWorld/Title';
+import React, {useState, useEffect, useCallback} from 'react';
+import {fetchActivities} from "../services/strava";
 
-export const HelloWorld: React.FC<{
-	titleText: string;
-	titleColor: string;
-}> = ({titleText, titleColor}) => {
-	const frame = useCurrentFrame();
-	const {durationInFrames, fps} = useVideoConfig();
+const Title: React.FC<{title: string}> = ({title}) => {
+	const frame = useCurrentFrame()
+	const opacity = interpolate(frame, [0, 20], [0, 1], {extrapolateRight: 'clamp'})
 
-	// Animate from 0 to 1 after 25 frames
-	const logoTranslationProgress = spring({
-		frame: frame - 25,
-		fps,
-		config: {
-			damping: 100,
-		},
-	});
-
-	// Move the logo up by 150 pixels once the transition starts
-	const logoTranslation = interpolate(
-		logoTranslationProgress,
-		[0, 1],
-		[0, -150]
-	);
-
-	// Fade out the animation at the end
-	const opacity = interpolate(
-		frame,
-		[durationInFrames - 25, durationInFrames - 15],
-		[1, 0],
-		{
-			extrapolateLeft: 'clamp',
-			extrapolateRight: 'clamp',
-		}
-	);
-
-	// A <AbsoluteFill> is just a absolutely positioned <div>!
 	return (
-		<AbsoluteFill style={{backgroundColor: 'white'}}>
-			<AbsoluteFill style={{opacity}}>
-				<AbsoluteFill style={{transform: `translateY(${logoTranslation}px)`}}>
-					<Logo />
-				</AbsoluteFill>
-				{/* Sequences can shift the time for its children! */}
-				<Sequence from={35}>
-					<Title titleText={titleText} titleColor={titleColor} />
-				</Sequence>
-				{/* The subtitle will only enter on the 75th frame. */}
-				<Sequence from={75}>
-					<Subtitle />
-				</Sequence>
-			</AbsoluteFill>
-		</AbsoluteFill>
+		<div style={{opacity}}>{title}</div>
+	)
+}
+
+export const HelloWorld: React.FC = () => {
+	const [data, setData] = useState<object[]>([]);
+	const [handle] = useState(() => delayRender());
+
+	const fetchData = useCallback(async () => {
+		const json = await fetchActivities('');
+		setData(json);
+
+		continueRender(handle);
+	}, [handle]);
+
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+
+	const renderActivity = (activity: any, index: number) => {
+		// @ts-ignore
+		return (
+			<Sequence durationInFrames={30} from={30 * index}>
+				<Title title={activity.id} />
+			</Sequence>
+		);
+	};
+	const renderActivities = useCallback(() => {
+		return (<ul>{data.map(renderActivity)}</ul>);
+	}, [data]);
+
+	return (
+		<div
+			style={{
+				flex: 1,
+				textAlign: "center",
+				fontSize: "7em",
+				backgroundColor: "white",
+			}}
+		>
+			{data.length ? renderActivities() : null}
+		</div>
 	);
 };
