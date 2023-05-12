@@ -1,23 +1,14 @@
 import {
-	interpolate,
-	Sequence,
-	useCurrentFrame,
+	Series,
 	delayRender,
 	continueRender
 } from 'remotion';
 import React, {useState, useEffect, useCallback} from 'react';
-import {fetchActivities} from "../services/strava";
+import {fetchActivities} from '../services/strava';
+import {decodeEncodedPolyline} from "../services/leaflet";
+import Activity from '../components/Activity';
 
-const Title: React.FC<{title: string}> = ({title}) => {
-	const frame = useCurrentFrame()
-	const opacity = interpolate(frame, [0, 20], [0, 1], {extrapolateRight: 'clamp'})
-
-	return (
-		<div style={{opacity}}>{title}</div>
-	)
-}
-
-export const HelloWorld: React.FC = () => {
+export const MyActivities: React.FC = () => {
 	const [data, setData] = useState<object[]>([]);
 	const [handle] = useState(() => delayRender());
 
@@ -33,15 +24,14 @@ export const HelloWorld: React.FC = () => {
 	}, [fetchData]);
 
 	const renderActivity = (activity: any, index: number) => {
-		// @ts-ignore
 		return (
-			<Sequence durationInFrames={30} from={30 * index}>
-				<Title title={activity.id} />
-			</Sequence>
+			<Series.Sequence durationInFrames={60} key={`seq-${index}`}>
+				<Activity data={decodeEncodedPolyline(activity.map['summary_polyline'])} index={index} />
+			</Series.Sequence>
 		);
 	};
 	const renderActivities = useCallback(() => {
-		return (<ul>{data.map(renderActivity)}</ul>);
+		return (<Series>{data.map(renderActivity)}</Series>);
 	}, [data]);
 
 	return (

@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import './App.css';
 import {Player} from '@remotion/player';
-import {HelloWorld} from '../remotion/HelloWorld';
+import {MyActivities} from '../remotion/MyActivities';
 import {fetchAccessTokens, fetchActivities, getAuthUrl} from '../services/strava';
-import Activities from './Activities';
 
 function App({code}: {code?: string}) {
     const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -11,7 +10,7 @@ function App({code}: {code?: string}) {
 
     const stravaLogin = useMemo(() => {
         if (activityList.length > 0) {
-            return (<Activities data={activityList} />)
+            return (<span>plop</span>)
         }
         if (accessToken) {
             fetchActivities(accessToken).then((data) => {
@@ -35,9 +34,8 @@ function App({code}: {code?: string}) {
                 {stravaLogin}
             </div>
             <Player
-                component={HelloWorld}
-                inputProps={{titleText: "Strava", titleColor: "orange"}}
-                durationInFrames={900}
+                component={MyActivities}
+                durationInFrames={1800}
                 compositionWidth={640}
                 compositionHeight={480}
                 fps={30}
