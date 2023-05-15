@@ -1,0 +1,36 @@
+.Activity {
+    display: flex;
+    flex-direction: column;
+}
+
+.ActivityHeader {
+    background-color: orange;
+    color: white;
+    display: grid;
+    grid-template-columns: [title] 50% [distance] 30% [duration] 20%;
+    font-size: 32px;
+    height: 68px;
+    line-height: 68px;
+}
+
+.ActivityHeaderTitle {
+    align-self: start;
+    grid-area: title;
+    padding: 0 0.5em;
+    text-align: start;
+}
+
+.ActivityHeaderDistance {
+    font-size: 80%;
+    grid-area: distance;
+}
+
+.ActivityHeaderDuration {
+    font-size: 60%;
+    grid-area: duration;
+}
+
+.ActivityMap {
+    height: 700px;
+    width: 1024px;
+}

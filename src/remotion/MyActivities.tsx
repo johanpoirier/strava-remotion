@@ -26,7 +26,7 @@ export const MyActivities: React.FC = () => {
 	const renderActivity = (activity: any, index: number) => {
 		return (
 			<Series.Sequence durationInFrames={60} key={`seq-${index}`}>
-				<Activity data={decodeEncodedPolyline(activity.map['summary_polyline'])} index={index} />
+				<Activity data={activity} index={index} />
 			</Series.Sequence>
 		);
 	};

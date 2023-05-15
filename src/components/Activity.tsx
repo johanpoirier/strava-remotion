@@ -1,20 +1,31 @@
+import React, {useEffect, useMemo, useState} from "react";
+import './Activity.css';
 import {continueRender, delayRender} from "remotion";
-import React, {useEffect, useState} from "react";
-import {generateMap} from "../services/leaflet";
+import {decodeEncodedPolyline, generateMap} from "../services/leaflet";
 
-export default function Activity({data, index}: {data: any[], index: number}) {
+export default function Activity({data, index}: {data: any, index: number}) {
     const mapId = `map-${index}`;
+    const polyline = useMemo(() => decodeEncodedPolyline(data.map['summary_polyline']), [data.map]);
 
     const [handle] = useState(() => delayRender());
     const [rendered, setRendered] = useState(false);
 
     useEffect(() => {
         if (!rendered) {
-            generateMap(mapId, data);
+            generateMap(mapId, polyline);
             setRendered(true);
         }
         continueRender(handle);
-    }, [data, mapId, rendered]);
+    }, [polyline, mapId, rendered]);
 
-    return (<div id={mapId} style={{width: '640px', height: '480px'}}></div>);
+    return (
+        <section className="Activity">
+            <div className="ActivityHeader">
+                <span className="ActivityHeaderTitle">{data.name}</span>
+                <span className="ActivityHeaderDistance">{Math.round(data.distance / 1000)}km</span>
+                <span className="ActivityHeaderDuration">{data.moving_time}s</span>
+            </div>
+            <div id={mapId} className="ActivityMap"></div>
+        </section>
+    );
 }

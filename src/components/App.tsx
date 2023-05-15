@@ -36,8 +36,8 @@ function App({code}: {code?: string}) {
             <Player
                 component={MyActivities}
                 durationInFrames={1800}
-                compositionWidth={640}
-                compositionHeight={480}
+                compositionWidth={1024}
+                compositionHeight={768}
                 fps={30}
                 controls
             />
