@@ -20,10 +20,12 @@ export default function Activity({data, index}: {data: any, index: number}) {
 
     return (
         <section className="Activity">
-            <div className="ActivityHeader">
-                <span className="ActivityHeaderTitle">{data.name}</span>
-                <span className="ActivityHeaderDistance">{Math.round(data.distance / 1000)}km</span>
-                <span className="ActivityHeaderDuration">{data.moving_time}s</span>
+            <img className="ActivityLogo" src="/assets/trail-running.png" alt={data['sport_type']} />
+            <div className="ActivityTitle">{data.name}</div>
+            <div className="ActivityData">
+                <span className="ActivityDataDetail">{Math.round(data.distance / 1000)} km</span>
+                <span className="ActivityDataDetail">{Math.round(data.moving_time / 60)} min</span>
+                <span className="ActivityDataDetail">{Math.round(data.total_elevation_gain)}+</span>
             </div>
             <div id={mapId} className="ActivityMap"></div>
         </section>
