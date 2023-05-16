@@ -1,10 +1,15 @@
 import Chart from 'chart.js/auto';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
+import {useCurrentFrame} from 'remotion';
+import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION} from '../tools/constants';
 
-const totalDuration = 1800;
+const totalDuration = DISPLAY_FRAME_RATIO * ACTIVITY_VIDEO_DURATION;
 
 export default function ActivityElevation({distances, elevations}: { distances: number[], elevations: number[] }) {
     const elevationId = `elevation-${Math.round(Math.random() * 100000)}`;
+
+    const frame = useCurrentFrame();
+    const [chart, setChart] = useState<any>(null);
 
     const animation = useMemo(() => {
         const delayBetweenPoints = totalDuration / distances.length;
@@ -40,7 +45,13 @@ export default function ActivityElevation({distances, elevations}: { distances: 
     }, [distances]);
 
     useEffect(() => {
-        new Chart(
+        if (frame === 0) {
+            return;
+        }
+        if (chart) {
+            return;
+        }
+        setChart(new Chart(
             // @ts-ignore
             document.getElementById(elevationId),
             {
@@ -49,8 +60,10 @@ export default function ActivityElevation({distances, elevations}: { distances: 
                     labels: distances,
                     datasets: [{
                         data: elevations,
-                        fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
+                        fill: true,
+                        backgroundColor: 'rgb(255,227,215)',
+                        borderColor: 'rgb(255,128,65)',
+                        borderWidth: 1,
                         tension: 0.1
                     }]
                 },
@@ -73,8 +86,8 @@ export default function ActivityElevation({distances, elevations}: { distances: 
                     }
                 }
             }
-        )
-    }, []);
+        ));
+    }, [chart, frame, animation, distances, elevations, elevationId]);
 
     return (<canvas id={elevationId} className="ActivityElevation" height="80px"></canvas>);
 }
