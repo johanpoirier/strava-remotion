@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import './Activity.css';
 import {continueRender, delayRender} from "remotion";
 import {decodeEncodedPolyline, generateMap} from "../services/leaflet";
+import {getActivityLogo} from "../tools/activity-logo";
 
 export default function Activity({data, index}: {data: any, index: number}) {
     const mapId = `map-${index}`;
@@ -20,7 +21,7 @@ export default function Activity({data, index}: {data: any, index: number}) {
 
     return (
         <section className="Activity">
-            <img className="ActivityLogo" src="/assets/trail-running.png" alt={data['sport_type']} />
+            <img className="ActivityLogo" src={`/assets/${getActivityLogo(data['sport_type'])}`} alt={data['sport_type']} />
             <div className="ActivityTitle">{data.name}</div>
             <div className="ActivityData">
                 <span className="ActivityDataDetail">{Math.round(data.distance / 1000)} km</span>

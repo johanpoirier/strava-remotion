@@ -5,7 +5,6 @@ import {
 } from 'remotion';
 import React, {useState, useEffect, useCallback} from 'react';
 import {fetchActivities} from '../services/strava';
-import {decodeEncodedPolyline} from "../services/leaflet";
 import Activity from '../components/Activity';
 
 export const MyActivities: React.FC = () => {

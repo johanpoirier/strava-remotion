@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, {useState, useMemo} from 'react';
 import './App.css';
 import {Player} from '@remotion/player';
 import {MyActivities} from '../remotion/MyActivities';
@@ -10,12 +10,10 @@ function App({code}: {code?: string}) {
 
     const stravaLogin = useMemo(() => {
         if (activityList.length > 0) {
-            return (<span>plop</span>)
+            return (<span>Done</span>)
         }
         if (accessToken) {
-            fetchActivities(accessToken).then((data) => {
-                setActivityList(data);
-            });
+            fetchActivities(accessToken).then((data) => setActivityList(data));
             return (<span>Loading</span>)
         }
         if (code) {
