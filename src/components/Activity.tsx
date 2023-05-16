@@ -1,52 +1,30 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo} from 'react';
 import './Activity.css';
-import {continueRender, delayRender, useCurrentFrame} from "remotion";
-import {decodeEncodedPolyline, drawActivityMarker, drawActivityRoute, generateMap} from "../services/leaflet";
-import {getActivityLogo} from "../tools/activity-logo";
+import {getActivityLogo} from '../tools/activity-logo';
+import ActivityMap from "./ActivityMap";
+import {MyActivity} from "../models/MyActivity";
+import ActivityElevation from "./ActivityElevation";
 
-export default function Activity({data, index}: {data: any, index: number}) {
-    const mapId = `map-${index}`;
-    const polyline = useMemo(() => decodeEncodedPolyline(data.map['summary_polyline']), [data.map]);
-    const frame = useCurrentFrame();
-    const coordinatesPerFrame = useMemo(() => {
-        return Math.ceil(polyline.length / 55);
-    }, [polyline])
+const TOTAL_FRAME_COUNT = 60;
+const DISPLAY_FRAME_RATIO = 0.9;
 
-    const [handle] = useState(() => delayRender());
-    const [rendered, setRendered] = useState(false);
-    const [map, setMap] = useState<any>();
-
-    useEffect(() => {
-        if (!rendered) {
-            const currentMap = generateMap(mapId, polyline);
-            setMap(currentMap);
-            drawActivityMarker(currentMap, polyline[0]);
-            setRendered(true);
-        }
-        continueRender(handle);
-    }, [polyline, mapId, rendered]);
-
-    useEffect(() => {
-        if (map) {
-            const from = frame * coordinatesPerFrame;
-            const to = (frame + 1) * coordinatesPerFrame + 1;
-            drawActivityRoute(map, polyline.slice(from, to));
-            if (to > polyline.length) {
-                drawActivityMarker(map, polyline[polyline.length - 1], 'end');
-            }
-        }
-    }, [map, polyline, frame, coordinatesPerFrame]);
+export default function Activity({data}: { data: MyActivity }) {
+    const pointsPerFrame = useMemo(() => {
+        return Math.ceil(data.map.length / (DISPLAY_FRAME_RATIO * TOTAL_FRAME_COUNT));
+    }, [data.map])
 
     return (
         <section className="Activity">
-            <img className="ActivityLogo" src={`/assets/${getActivityLogo(data['sport_type'])}`} alt={data['sport_type']} />
+            <img className="ActivityLogo" src={`/assets/${getActivityLogo(data.type)}`}
+                 alt={data.type}/>
             <div className="ActivityTitle">{data.name}</div>
             <div className="ActivityData">
                 <span className="ActivityDataDetail">{Math.round(data.distance / 1000)} km</span>
-                <span className="ActivityDataDetail">{Math.round(data.moving_time / 60)} min</span>
-                <span className="ActivityDataDetail">{Math.round(data.total_elevation_gain)}+</span>
+                <span className="ActivityDataDetail">{Math.round(data.duration / 60)} min</span>
+                <span className="ActivityDataDetail">{Math.round(data.elevationGain)}+</span>
             </div>
-            <div id={mapId} className="ActivityMap"></div>
+            <ActivityMap pointsPerFrame={pointsPerFrame} coordinates={data.map}/>
+            <ActivityElevation distances={data.streams.distance.data} elevations={data.streams.altitude.data}/>
         </section>
     );
 }

@@ -1,37 +1,23 @@
 import {
-	Series,
-	delayRender,
-	continueRender
+	Series
 } from 'remotion';
-import React, {useState, useEffect, useCallback} from 'react';
-import {fetchActivities} from '../services/strava';
+import React, {useCallback, useContext} from 'react';
 import Activity from '../components/Activity';
+import {DataContext} from "../contexts/DataContext";
 
 export const MyActivities: React.FC = () => {
-	const [data, setData] = useState<object[]>([]);
-	const [handle] = useState(() => delayRender());
-
-	const fetchData = useCallback(async () => {
-		const json = await fetchActivities('');
-		setData(json);
-
-		continueRender(handle);
-	}, [handle]);
-
-	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
+	const activityList = useContext(DataContext);
 
 	const renderActivity = (activity: any, index: number) => {
 		return (
 			<Series.Sequence durationInFrames={60} key={`seq-${index}`}>
-				<Activity data={activity} index={index} />
+				<Activity data={activity} />
 			</Series.Sequence>
 		);
 	};
 	const renderActivities = useCallback(() => {
-		return (<Series>{data.map(renderActivity)}</Series>);
-	}, [data]);
+		return (<Series>{activityList.map(renderActivity)}</Series>);
+	}, [activityList]);
 
 	return (
 		<div
@@ -42,7 +28,7 @@ export const MyActivities: React.FC = () => {
 				backgroundColor: "white",
 			}}
 		>
-			{data.length ? renderActivities() : null}
+			{activityList.length ? renderActivities() : null}
 		</div>
 	);
 };
