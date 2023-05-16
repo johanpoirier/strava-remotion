@@ -40,3 +40,16 @@ export async function fetchActivity(token: string, activityId: string): Promise<
     }
     return response.json();
 }
+
+export async function fetchActivityStreams(token: string, activityId: string, streamTypes: string[] = ['distance']): Promise<any> {
+    const activityUrl: string = `https://www.strava.com/api/v3/activities/${activityId}/streams?keys=${streamTypes.join(',')}&key_by_type=true`;
+    const response: Response = await fetch(activityUrl, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (!response.ok) {
+        throw Error(`fetchActivity failed: ${response.statusText}`);
+    }
+    return response.json();
+}
