@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {fetchAccessTokens, getAuthUrl} from '../../services/strava';
 import {ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, TOKEN_EXPIRATION_KEY} from '../../tools/constants';
 import {useNavigate} from 'react-router-dom';
+import './style.css';
 
 export default function StravaLogin({code}: { code?: string }) {
     const navigate = useNavigate();
@@ -30,8 +31,17 @@ export default function StravaLogin({code}: { code?: string }) {
         }
     }, [accessToken])
 
-    if (!accessToken) {
-        return (<a href={getAuthUrl()}>Login to Strava</a>);
+
+    const renderLoginLink = () => {
+        if (!accessToken) {
+            return (<a className="strava-login-button" href={getAuthUrl()}>Login to Strava</a>);
+        }
+        return null;
     }
-    return null;
+
+    return (
+        <main className="strava-login">
+            {renderLoginLink()}
+        </main>
+    );
 }

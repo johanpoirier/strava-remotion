@@ -2,9 +2,8 @@ import React, {useState, useCallback, useEffect} from 'react';
 import './style.css';
 import {Player} from '@remotion/player';
 import {MyActivities} from '../../remotion/MyActivities';
-import {fetchAccessTokens, fetchActivities, fetchActivityStreams, getAuthUrl} from '../../services/strava';
-import { DataContext } from '../../contexts/DataContext';
-import {buildMyActivity, MyActivity} from '../../models/MyActivity';
+import {DataContext} from '../../contexts/DataContext';
+import {MyActivity} from '../../models/MyActivity';
 import {continueRender, delayRender} from 'remotion';
 import {fetchAthleteActivities} from "../../services/data";
 

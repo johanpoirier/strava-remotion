@@ -2,14 +2,10 @@ name: Render video
 on:
   workflow_dispatch:
     inputs:
-      titleText:
-        description: "Which text should it say?"
+      token:
+        description: "Gimme your token?"
         required: true
-        default: "Welcome to Remotion"
-      titleColor:
-        description: "Which color should it be in?"
-        required: true
-        default: "black"
+        default: ""
 jobs:
   render:
     name: Render video
