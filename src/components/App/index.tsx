@@ -1,10 +1,10 @@
 import React, {useState, useMemo, useCallback, useEffect} from 'react';
 import './App.css';
 import {Player} from '@remotion/player';
-import {MyActivities} from '../remotion/MyActivities';
-import {fetchAccessTokens, fetchActivities, fetchActivityStreams, getAuthUrl} from '../services/strava';
-import { DataContext } from '../contexts/DataContext';
-import {buildMyActivity, MyActivity} from '../models/MyActivity';
+import {MyActivities} from '../../remotion/MyActivities';
+import {fetchAccessTokens, fetchActivities, fetchActivityStreams, getAuthUrl} from '../../services/strava';
+import { DataContext } from '../../contexts/DataContext';
+import {buildMyActivity, MyActivity} from '../../models/MyActivity';
 import {continueRender, delayRender} from 'remotion';
 
 function App({code}: {code?: string}) {

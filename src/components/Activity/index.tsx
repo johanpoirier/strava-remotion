@@ -1,11 +1,11 @@
 import React, {useMemo} from 'react';
-import './Activity.css';
-import {getActivityLogo} from '../tools/activity-logo';
+import './style.css';
+import {getActivityLogo} from '../../tools/activity-logo';
+import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../../tools/constants';
+import {MyActivity} from '../../models/MyActivity';
+import ActivityHeader from './ActivityHeader';
 import ActivityMap from './ActivityMap';
-import {MyActivity} from '../models/MyActivity';
 import ActivityElevation from './ActivityElevation';
-import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../tools/constants';
-import ActivityHeader from "./ActivityHeader";
 
 export default function Activity({data}: { data: MyActivity }) {
     const pointsPerFrame = useMemo(() => {

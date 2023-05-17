@@ -1,5 +1,5 @@
 import React from 'react';
-import './ActivityHeader.css';
+import './style.css';
 
 export default function ActivityHeader({name, date}: { name: string, date: string }) {
     return (
