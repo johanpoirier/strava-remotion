@@ -1,5 +1,6 @@
-declare var L: any
-declare var polyline: any
+import polyline from '../tools/polyline';
+// @ts-ignore
+import L from 'leaflet';
 
 const startIcon = L.icon({
     iconUrl: '/marker.png',

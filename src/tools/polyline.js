@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Based off of [the offical Google document](https://developers.google.com/maps/documentation/utilities/polylinealgorithm)
  *
@@ -9,7 +7,7 @@
  * @module polyline
  */
 
-var polyline = {};
+const polyline = {};
 
 function py2_round(value) {
     // Google's polyline algorithm uses the same rounding strategy as Python 2, which is different from JS for negative values
@@ -43,7 +41,7 @@ function encode(current, previous, factor) {
  *
  * @see https://github.com/Project-OSRM/osrm-frontend/blob/master/WebContent/routing/OSRM.RoutingGeometry.js
  */
-polyline.decode = function(str, precision) {
+polyline.decode = function(str, precision= 5) {
     var index = 0,
         lat = 0,
         lng = 0,
@@ -156,6 +154,4 @@ polyline.toGeoJSON = function(str, precision) {
     };
 };
 
-if (typeof module === 'object' && module.exports) {
-    module.exports = polyline;
-}
+export default polyline;
