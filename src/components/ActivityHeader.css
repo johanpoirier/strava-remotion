@@ -1,0 +1,16 @@
+.ActivityHeader {
+    align-items: center;
+    background-color: #fc5200;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    grid-area: title;
+    height: 68px;
+    justify-content: space-between;
+    padding: 0 0.5em;
+}
+
+.ActivityHeaderDate {
+    font-size: 60%;
+    font-style: italic;
+}

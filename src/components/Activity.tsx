@@ -5,6 +5,7 @@ import ActivityMap from './ActivityMap';
 import {MyActivity} from '../models/MyActivity';
 import ActivityElevation from './ActivityElevation';
 import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../tools/constants';
+import ActivityHeader from "./ActivityHeader";
 
 export default function Activity({data}: { data: MyActivity }) {
     const pointsPerFrame = useMemo(() => {
@@ -15,7 +16,7 @@ export default function Activity({data}: { data: MyActivity }) {
         <section className="Activity">
             <img className="ActivityLogo" src={`/assets/${getActivityLogo(data.type)}`}
                  alt={data.type}/>
-            <div className="ActivityTitle">{data.name}</div>
+            <ActivityHeader name={data.name} date={data.startDate} />
             <div className="ActivityData">
                 <span className="ActivityDataDetail">{Math.round(data.distance / 1000)} km</span>
                 <span className="ActivityDataDetail">{Math.round(data.duration / 60)} min</span>

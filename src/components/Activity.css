@@ -12,23 +12,6 @@
     max-width: 92px;
 }
 
-.ActivityTitle {
-    align-self: start;
-    background-color: #fc5200;
-    color: white;
-    grid-area: title;
-    height: 68px;
-    line-height: 68px;
-    padding: 0 0.5em;
-    text-align: start;
-}
-
-.ActivityMap {
-    grid-area: map;
-    height: 620px;
-    width: 924px;
-}
-
 .ActivityData {
     background-color: #fc5200;
     color: white;
@@ -41,10 +24,4 @@
 .ActivityDataDetail {
     font-size: 80%;
     padding: 0.5em 0;
-}
-
-.ActivityElevation {
-    grid-area: elevation;
-    height: 80px;
-    width: 1024px;
 }

@@ -2,6 +2,7 @@ import Chart from 'chart.js/auto';
 import {useEffect, useMemo, useState} from 'react';
 import {useCurrentFrame} from 'remotion';
 import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION} from '../tools/constants';
+import './ActivityElevation.css';
 
 const totalDuration = DISPLAY_FRAME_RATIO * ACTIVITY_VIDEO_DURATION;
 
