@@ -8,7 +8,7 @@ import {buildMyActivity, MyActivity} from '../models/MyActivity';
 import {continueRender, delayRender} from 'remotion';
 
 function App({code}: {code?: string}) {
-    const [accessToken, setAccessToken] = useState<string | null>('plop');
+    const [accessToken, setAccessToken] = useState<string | null>(null);
     const [activityList, setActivityList] = useState<MyActivity[]>([]);
     const [handle] = useState(() => delayRender());
 
@@ -42,24 +42,27 @@ function App({code}: {code?: string}) {
         return (<a href={getAuthUrl()}>Login to Strava</a>);
     }, [code, activityList]);
 
-    if (activityList.length === 0) {
-        return (<span>Loading…</span>);
+
+
+    const renderPlayer = () => {
+        if (activityList.length === 0) {
+            return (<span>Loading…</span>);
+        }
+        return (<Player
+            component={MyActivities}
+            durationInFrames={activityList.length * 60}
+            compositionWidth={1024}
+            compositionHeight={768}
+            fps={30}
+            controls
+        />);
     }
 
     return (
         <DataContext.Provider value={activityList}>
             <div className="App">
-                <div>
-                    {stravaLogin}
-                </div>
-                <Player
-                    component={MyActivities}
-                    durationInFrames={activityList.length * 60}
-                    compositionWidth={1024}
-                    compositionHeight={768}
-                    fps={30}
-                    controls
-                />
+                <div>{stravaLogin}</div>
+                {renderPlayer()}
             </div>
         </DataContext.Provider>
     );
