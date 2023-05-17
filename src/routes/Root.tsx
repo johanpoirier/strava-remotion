@@ -1,7 +1,16 @@
-import { useSearchParams } from 'react-router-dom';
 import App from '../components/App';
+import {isLoggedIn} from '../services/auth';
+import {useNavigate} from 'react-router-dom';
+import {useEffect} from "react";
 
 export default function Root() {
-    const [searchParams] = useSearchParams();
-    return (<App code={searchParams.get('code') ?? undefined} />);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoggedIn()) {
+            navigate('/login');
+        }
+    });
+
+    return (<App />);
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import './ActivityMap.css';
-import {drawActivityMarker, drawActivityRoute, generateMap} from '../services/leaflet';
+import './style.css';
+import {drawActivityMarker, drawActivityRoute, generateMap} from '../../../services/leaflet';
 import {useCurrentFrame} from 'remotion';
 
 export default function ActivityMap({pointsPerFrame, coordinates}: { pointsPerFrame: number, coordinates: any[] }) {
