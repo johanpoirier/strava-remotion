@@ -3,7 +3,7 @@ import {
 } from 'remotion';
 import React, {useCallback, useContext} from 'react';
 import Activity from '../components/Activity';
-import {DataContext} from "../contexts/DataContext";
+import {DataContext} from '../contexts/DataContext';
 
 export const MyActivities: React.FC = () => {
 	const activityList = useContext(DataContext);

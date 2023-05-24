@@ -19,11 +19,10 @@ const endIcon = L.icon({
 export function decodeEncodedPolyline(encodedData: string): any[] {
   return polyline.decode(encodedData);
 }
-export function generateMap(elementId: string, coordinates: any[]): any {
-    // Creating a map object
-    const map = new L.map(elementId);
+export function generateMap(elementId: string, coordinates: any[], onRenderComplete?: any): any {
+    const canvasRenderer = L.canvas();
+    const map = new L.map(elementId, {renderer: canvasRenderer});
 
-    // Creating a Layer object
     const layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
     // Adding layer to the map
@@ -32,13 +31,9 @@ export function generateMap(elementId: string, coordinates: any[]): any {
     const myBounds = new L.LatLngBounds(coordinates);
     map.fitBounds(myBounds);
 
-    // const polylineOptions = {color: 'red'}
-    // const polyline = L.polyline(coordinates, polylineOptions);
-    // polyline.addTo(map);
-    // console.log('coordinates count', coordinates.length);
-    //
-    // L.marker(coordinates[0], {icon: startIcon}).addTo(map);
-    // L.marker(coordinates[coordinates.length - 1], {icon: endIcon}).addTo(map);
+    if (onRenderComplete) {
+        canvasRenderer.on('update', onRenderComplete);
+    }
 
     return map;
 }

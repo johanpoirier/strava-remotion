@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import * as Cabin from '@remotion/google-fonts/Cabin';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {
@@ -8,6 +9,9 @@ import {
 } from 'react-router-dom';
 import Root from './routes/Root';
 import Login from './routes/Login';
+
+Cabin.loadFont('normal', { weights: ['400', '700'] });
+Cabin.loadFont('italic', { weights: ['400'] });
 
 const router = createBrowserRouter([
     {

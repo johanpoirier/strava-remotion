@@ -1,23 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './style.css';
 import {drawActivityMarker, drawActivityRoute, generateMap} from '../../../services/leaflet';
-import {useCurrentFrame} from 'remotion';
+import {continueRender, delayRender, useCurrentFrame} from 'remotion';
 
-export default function ActivityMap({pointsPerFrame, coordinates}: { pointsPerFrame: number, coordinates: any[] }) {
-    const mapId = `map-${Math.round(Math.random() * 100000)}`;
+export default function ActivityMap({id, pointsPerFrame, coordinates}: { id: string, pointsPerFrame: number, coordinates: any[] }) {
     const frame = useCurrentFrame();
 
-    const [rendered, setRendered] = useState(false);
     const [map, setMap] = useState<any>();
 
+    const [handle] = useState(() => {
+        // console.log('[ActivityMap] delay render');
+        return delayRender();
+    });
+
+    const generateActivityMap = useCallback(() => {
+        const leafletMap = generateMap(`map-${id}`, coordinates, () => {
+            // console.log('[ActivityMap] continue render');
+            continueRender(handle);
+        });
+        setTimeout(() => {
+            // console.log('[ActivityMap] continue render');
+            continueRender(handle);
+        }, 2000);
+        setMap(leafletMap);
+        drawActivityMarker(leafletMap, coordinates[0]);
+    }, [coordinates, handle, id]);
+
     useEffect(() => {
-        if (!rendered) {
-            setRendered(true);
-            const leafletMap = generateMap(mapId, coordinates);
-            setMap(leafletMap);
-            drawActivityMarker(leafletMap, coordinates[0]);
-        }
-    }, [coordinates, mapId, rendered]);
+        generateActivityMap();
+    }, [generateActivityMap]);
 
     useEffect(() => {
         if (map) {
@@ -30,5 +41,5 @@ export default function ActivityMap({pointsPerFrame, coordinates}: { pointsPerFr
         }
     }, [map, coordinates, frame, pointsPerFrame]);
 
-    return (<div id={mapId} className="ActivityMap"></div>);
+    return (<div id={`map-${id}`} className="ActivityMap"></div>);
 }
