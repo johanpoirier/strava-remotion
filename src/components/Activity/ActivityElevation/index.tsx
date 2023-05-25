@@ -6,7 +6,11 @@ import './style.css';
 
 const totalDuration = DISPLAY_FRAME_RATIO * ACTIVITY_VIDEO_DURATION;
 
-export default function ActivityElevation({id, distances, elevations}: { id: string, distances: number[], elevations: number[] }) {
+export default function ActivityElevation({id, distances, elevations}: {
+    id: string,
+    distances: number[],
+    elevations: number[]
+}) {
     const elevationId = `elevation-${id}`;
 
     const frame = useCurrentFrame();
@@ -70,6 +74,7 @@ export default function ActivityElevation({id, distances, elevations}: { id: str
                 },
                 options: {
                     animation,
+                    aspectRatio: 16,
                     plugins: {
                         legend: {
                             display: false
@@ -90,5 +95,9 @@ export default function ActivityElevation({id, distances, elevations}: { id: str
         ));
     }, [chart, frame, animation, distances, elevations, elevationId]);
 
-    return (<canvas id={elevationId} className="ActivityElevation" height="80px"></canvas>);
+    return (
+        <div className="ActivityElevation">
+            <canvas id={elevationId}></canvas>
+        </div>
+    );
 }
