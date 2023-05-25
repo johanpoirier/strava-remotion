@@ -1,5 +1,5 @@
 .ActivityMap {
     grid-area: map;
-    height: 620px;
-    width: 924px;
+    height: calc(720px - 68px - 80px);
+    width:  calc(1280px - 100px);
 }

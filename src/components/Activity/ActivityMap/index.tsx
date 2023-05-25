@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './style.css';
+import 'leaflet/dist/leaflet.css';
 import {drawActivityMarker, drawActivityRoute, generateMap} from '../../../services/leaflet';
 import {continueRender, delayRender, useCurrentFrame} from 'remotion';
 
@@ -7,31 +8,24 @@ export default function ActivityMap({id, pointsPerFrame, coordinates}: { id: str
     const frame = useCurrentFrame();
 
     const [map, setMap] = useState<any>();
-
-    const [handle] = useState(() => {
-        // console.log('[ActivityMap] delay render');
-        return delayRender();
-    });
+    // const [handle] = useState(() => delayRender(`[ActivityMap] Generate map ${id}`));
 
     const generateActivityMap = useCallback(() => {
-        const leafletMap = generateMap(`map-${id}`, coordinates, () => {
-            // console.log('[ActivityMap] continue render');
-            continueRender(handle);
+        const start = Date.now();
+        const leafletMap: any = generateMap(`map-${id}`, coordinates, () => {
+            console.log(`[ActivityMap] map ${id} generated`, Date.now() - start);
+            // continueRender(handle);
         });
-        setTimeout(() => {
-            // console.log('[ActivityMap] continue render');
-            continueRender(handle);
-        }, 2000);
         setMap(leafletMap);
         drawActivityMarker(leafletMap, coordinates[0]);
-    }, [coordinates, handle, id]);
+    }, [coordinates, id]);
 
     useEffect(() => {
         generateActivityMap();
     }, [generateActivityMap]);
 
     useEffect(() => {
-        if (map) {
+        if (map && frame > 0) {
             const from = frame * pointsPerFrame;
             const to = (frame + 1) * pointsPerFrame + 1;
             drawActivityRoute(map, coordinates.slice(from, to));

@@ -6,14 +6,14 @@ import './style.css';
 
 const totalDuration = DISPLAY_FRAME_RATIO * ACTIVITY_VIDEO_DURATION;
 
-export default function ActivityElevation({distances, elevations}: { distances: number[], elevations: number[] }) {
-    const elevationId = `elevation-${Math.round(Math.random() * 100000)}`;
+export default function ActivityElevation({id, distances, elevations}: { id: string, distances: number[], elevations: number[] }) {
+    const elevationId = `elevation-${id}`;
 
     const frame = useCurrentFrame();
     const [chart, setChart] = useState<any>(null);
 
     const animation = useMemo(() => {
-        const delayBetweenPoints = totalDuration / distances.length;
+        const delayBetweenPoints = Math.floor(totalDuration / distances.length);
         const previousY = (ctx: any) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
         return {
             x: {

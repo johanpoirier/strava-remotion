@@ -6,21 +6,18 @@ import {MyActivities} from '../../remotion/MyActivities';
 import {DataContext} from '../../contexts/DataContext';
 import {MyActivity} from '../../models/MyActivity';
 import {fetchAthleteActivities} from '../../services/data';
+import {ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../../tools/constants';
 
 function App() {
     const [accessToken] = useState<string | null>(localStorage.getItem('atkn'));
-    const [activityList, setActivityList] = useState<MyActivity[]>([]);
-    const [handle] = useState(() => {
-        console.log('[App] delay render');
-        return delayRender();
-    });
+    const [activities, setActivities] = useState<MyActivity[]>([]);
+    const [handle] = useState(() => delayRender());
 
     const fetchData = useCallback(async () => {
         if (accessToken) {
             const athleteActivities = await fetchAthleteActivities(accessToken);
-            setActivityList(athleteActivities);
+            setActivities(athleteActivities);
             continueRender(handle);
-            console.log('[App] continue render');
         }
     }, [accessToken, handle]);
 
@@ -29,21 +26,21 @@ function App() {
     }, [fetchData]);
 
     const renderPlayer = () => {
-        if (activityList.length === 0) {
+        if (activities.length === 0) {
             return (<span>Loading…</span>);
         }
         return (<Player
             component={MyActivities}
-            durationInFrames={activityList.length * 60}
-            compositionWidth={1024}
-            compositionHeight={768}
+            durationInFrames={Math.round((activities.length * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)}
+            compositionWidth={1280}
+            compositionHeight={720}
             fps={30}
             controls
         />);
     }
 
     return (
-        <DataContext.Provider value={activityList}>
+        <DataContext.Provider value={activities}>
             <div className="App">
                 {renderPlayer()}
             </div>
