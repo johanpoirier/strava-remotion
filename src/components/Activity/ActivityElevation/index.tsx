@@ -2,9 +2,10 @@ import {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useCurrentFrame} from 'remotion';
 import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../../../tools/constants';
 import './style.css';
-import {drawActivityMarker, drawActivityRoute} from "../../../services/leaflet";
 
-const totalDuration = DISPLAY_FRAME_RATIO * ACTIVITY_VIDEO_DURATION;
+const CANVAS_HEIGHT = 80;
+const CANVAS_WIDTH = 1280;
+const MIN_ELEVATION = 50;
 
 export default function ActivityElevation({id, times, elevations}: {
     id: string,
@@ -16,12 +17,12 @@ export default function ActivityElevation({id, times, elevations}: {
     const canvasRef = useRef(null);
 
     const timeRatio: number = useMemo(() => {
-        return (times[times.length - 1] - times[0]) / 1000;
+        return (times[times.length - 1] - times[0]) / CANVAS_WIDTH;
     }, [times]);
 
     const elevationMin: number = useMemo(() => Math.min(...elevations), [elevations]);
     const elevationRatio: number = useMemo(() => {
-        return (Math.max(...elevations) - elevationMin) / 70;
+        return Math.max(Math.max(...elevations) - elevationMin, MIN_ELEVATION) / (CANVAS_HEIGHT - 10);
     }, [elevations, elevationMin]);
 
     const pointsPerFrame = useMemo(() => {
@@ -34,23 +35,33 @@ export default function ActivityElevation({id, times, elevations}: {
 
     const drawLine = useCallback((ref: any, xData: number[], yData: number[]) => {
         const canvasContext = ref.current.getContext('2d');
-        canvasContext.lineWidth = 5;
+        canvasContext.lineWidth = 4;
+        canvasContext.fillStyle = '#e86322';
         canvasContext.beginPath();
 
         const firstPoint = getPointCoordinates(xData[0], yData[0]);
-        canvasContext.moveTo(firstPoint.x, firstPoint.y);
+        canvasContext.moveTo(firstPoint.x - 1, CANVAS_HEIGHT);
+        canvasContext.lineTo(firstPoint.x - 1, CANVAS_HEIGHT - firstPoint.y);
+
         xData.forEach((x, index) => {
             if (index === 0) return;
             const nextPointCoordinates = getPointCoordinates(xData[index], yData[index]);
-            canvasContext.lineTo(nextPointCoordinates.x, nextPointCoordinates.y);
-            canvasContext.stroke();
+            canvasContext.lineTo(nextPointCoordinates.x, CANVAS_HEIGHT - nextPointCoordinates.y);
         });
+
+        const lastPoint = getPointCoordinates(xData[xData.length - 1], yData[yData.length - 1]);
+        canvasContext.lineTo(lastPoint.x, CANVAS_HEIGHT);
+        canvasContext.lineTo(firstPoint.x, CANVAS_HEIGHT);
+
         canvasContext.fill();
     }, [getPointCoordinates]);
 
     useEffect(() => {
         const from = frame * pointsPerFrame;
         const to = (frame + 1) * pointsPerFrame + 1;
+        if (from > times.length) {
+            return;
+        }
         const xData = times.slice(from, to);
         const yData = elevations.slice(from, to);
         drawLine(canvasRef, xData, yData);
@@ -58,7 +69,7 @@ export default function ActivityElevation({id, times, elevations}: {
 
     return (
         <div className="ActivityElevation">
-            <canvas id={elevationId} ref={canvasRef} width="1280px" height="80px"></canvas>
+            <canvas id={elevationId} ref={canvasRef} width={`${CANVAS_WIDTH}px`} height={`${CANVAS_HEIGHT}px`}></canvas>
         </div>
     );
 }
