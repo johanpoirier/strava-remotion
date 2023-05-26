@@ -4,8 +4,8 @@ import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '..
 import './style.css';
 
 const CANVAS_HEIGHT = 80;
-const CANVAS_WIDTH = 1280;
-const MIN_ELEVATION = 50;
+const CANVAS_WIDTH = 1220;
+const MIN_ELEVATION_GAIN = 50;
 
 export default function ActivityElevation({id, times, elevations}: {
     id: string,
@@ -21,9 +21,18 @@ export default function ActivityElevation({id, times, elevations}: {
     }, [times]);
 
     const elevationMin: number = useMemo(() => Math.min(...elevations), [elevations]);
-    const elevationRatio: number = useMemo(() => {
-        return Math.max(Math.max(...elevations) - elevationMin, MIN_ELEVATION) / (CANVAS_HEIGHT - 10);
+    const elevationMax: number = useMemo(() => {
+        const max: number = Math.max(...elevations);
+        const elevationGain: number = max - elevationMin;
+        if (elevationGain < MIN_ELEVATION_GAIN) {
+            return max + MIN_ELEVATION_GAIN - elevationGain;
+        }
+        return max;
     }, [elevations, elevationMin]);
+
+    const elevationRatio: number = useMemo(() => {
+        return (elevationMax - elevationMin) / (CANVAS_HEIGHT - 10);
+    }, [elevationMax, elevationMin]);
 
     const pointsPerFrame = useMemo(() => {
         return Math.ceil(times.length / (DISPLAY_FRAME_RATIO * ACTIVITY_VIDEO_DURATION * FRAME_PER_SECOND / 1000));
@@ -69,6 +78,10 @@ export default function ActivityElevation({id, times, elevations}: {
 
     return (
         <div className="ActivityElevation">
+            <div className="elevation-axis">
+                <span>{Math.round(elevationMax)} m</span>
+                <span>{Math.round(elevationMin)} m</span>
+            </div>
             <canvas id={elevationId} ref={canvasRef} width={`${CANVAS_WIDTH}px`} height={`${CANVAS_HEIGHT}px`}></canvas>
         </div>
     );
