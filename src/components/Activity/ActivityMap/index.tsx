@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import './style.css';
 import 'leaflet/dist/leaflet.css';
 import {drawActivityMarker, drawActivityRoute, generateMap} from '../../../services/leaflet';
-import {continueRender, delayRender, useCurrentFrame} from 'remotion';
+import {useCurrentFrame} from 'remotion';
 
 export default function ActivityMap({id, pointsPerFrame, coordinates}: { id: string, pointsPerFrame: number, coordinates: any[] }) {
     const frame = useCurrentFrame();

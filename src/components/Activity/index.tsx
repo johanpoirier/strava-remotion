@@ -23,7 +23,7 @@ export default function Activity({data}: { data: MyActivity }) {
                 <span className="ActivityDataDetail">{Math.round(data.elevationGain)}m+</span>
             </div>
             <ActivityMap id={data.id} pointsPerFrame={pointsPerFrame} coordinates={data.map}/>
-            <ActivityElevation id={data.id} distances={data.streams.distance.data} elevations={data.streams.altitude.data}/>
+            <ActivityElevation id={data.id} times={data.streams.time.data} elevations={data.streams.altitude.data}/>
         </section>
     );
 }
