@@ -1,11 +1,16 @@
 import {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useCurrentFrame} from 'remotion';
-import {DISPLAY_FRAME_RATIO, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../../../tools/constants';
+import {
+    DISPLAY_FRAME_RATIO,
+    ACTIVITY_VIDEO_DURATION,
+    FRAME_PER_SECOND,
+    MIN_ELEVATION_GAIN
+} from '../../../tools/constants';
 import './style.css';
 
 const CANVAS_HEIGHT = 80;
 const CANVAS_WIDTH = 1220;
-const MIN_ELEVATION_GAIN = 50;
+const FILL_COLOR = '#e86322';
 
 export default function ActivityElevation({id, times, elevations}: {
     id: string,
@@ -44,8 +49,7 @@ export default function ActivityElevation({id, times, elevations}: {
 
     const drawLine = useCallback((ref: any, xData: number[], yData: number[]) => {
         const canvasContext = ref.current.getContext('2d');
-        canvasContext.lineWidth = 4;
-        canvasContext.fillStyle = '#e86322';
+        canvasContext.fillStyle = FILL_COLOR;
         canvasContext.beginPath();
 
         const firstPoint = getPointCoordinates(xData[0], yData[0]);
