@@ -68,4 +68,17 @@ async function getRendersByUserId(userId) {
     });
 }
 
-module.exports = {setup, addRender, getRenderById, getRendersByUserId};
+async function getRendersToRun() {
+    return new Promise((resolve, reject) => {
+        const rendersGet = 'SELECT * FROM renders where status = 0';
+        db.all(rendersGet, function (err, results) {
+            if (err) {
+                reject(new Error(err.message, err));
+                return;
+            }
+            resolve(results);
+        });
+    });
+}
+
+module.exports = {setup, addRender, getRenderById, getRendersByUserId, getRendersToRun};

@@ -1,3 +1,5 @@
+require('./cron');
+
 const express = require('express');
 const {setup, addRender, getRenderById, getRendersByUserId} = require('./renders');
 
