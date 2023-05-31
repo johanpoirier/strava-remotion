@@ -9,7 +9,7 @@ app.listen(3004, () => {
     setup();
 });
 
-app.get('/user/:userId/renders', async (req, res) => {
+app.get('/api/user/:userId/renders', async (req, res) => {
     try {
         const renders = await getRendersByUserId(req.params.userId);
         if (!renders) {
@@ -21,7 +21,7 @@ app.get('/user/:userId/renders', async (req, res) => {
     }
 });
 
-app.get('/render/:id', async (req, res) => {
+app.get('/api/render/:id', async (req, res) => {
     try {
         const render = await getRenderById(req.params.id);
         if (!render) {
@@ -33,7 +33,7 @@ app.get('/render/:id', async (req, res) => {
     }
 });
 
-app.post('/render', async (req, res) => {
+app.post('/api/render', async (req, res) => {
     try {
         const renderId = await addRender(req.body.userId, req.body.token);
         res.send({renderId}).status(200).send();

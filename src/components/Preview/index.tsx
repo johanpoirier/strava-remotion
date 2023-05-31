@@ -8,7 +8,7 @@ import {MyActivity} from '../../models/MyActivity';
 import {fetchAthleteActivities} from '../../services/data';
 import {ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../../tools/constants';
 
-function App() {
+function Preview() {
     const [accessToken] = useState<string | null>(localStorage.getItem('atkn'));
     const [activities, setActivities] = useState<MyActivity[]>([]);
     const [handle] = useState(() => delayRender());
@@ -41,11 +41,11 @@ function App() {
 
     return (
         <DataContext.Provider value={activities}>
-            <div className="App">
+            <div className="preview">
                 {renderPlayer()}
             </div>
         </DataContext.Provider>
     );
 }
 
-export default App;
+export default Preview;

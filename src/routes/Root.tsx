@@ -1,7 +1,8 @@
-import App from '../components/App';
-import {isLoggedIn} from '../services/auth';
+import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useEffect} from "react";
+import {isLoggedIn} from '../services/auth';
+import Preview from '../components/Preview';
+import RequestForm from '../components/RequestForm';
 
 export default function Root() {
     const navigate = useNavigate();
@@ -12,5 +13,10 @@ export default function Root() {
         }
     });
 
-    return (<App />);
+    return (
+        <>
+            <RequestForm/>
+            <Preview/>
+        </>
+    );
 }
