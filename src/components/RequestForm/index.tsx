@@ -1,9 +1,13 @@
+import {useCallback, useContext} from 'react';
 import './style.css';
-import {addRenderRequest} from "../../services/api";
+import {addRenderRequest} from '../../services/api';
 import {getAccessToken} from '../../services/auth';
+import {UserContext} from '../../contexts/UserContext';
 
 export default function RequestForm() {
-    function handleSubmit(e: any) {
+    const athlete = useContext(UserContext);
+
+    const handleSubmit = useCallback((e: any) => {
         e.preventDefault();
 
         const form = e.target;
@@ -11,9 +15,18 @@ export default function RequestForm() {
 
         const formJson = Object.fromEntries(formData.entries());
 
-        // @ts-ignore
-        addRenderRequest({token: getAccessToken()!, activityCount: parseInt(formJson.activityCount, 10)}).then(console.log).catch(console.error);
-    }
+        if (!athlete) {
+            console.error('Unknown athlete…')
+            return;
+        }
+
+        addRenderRequest({
+            userId: athlete.id,
+            token: getAccessToken()!,
+            // @ts-ignore
+            activityCount: parseInt(formJson.activityCount, 10)
+        }).catch(console.error);
+    }, [athlete]);
 
     return (
         <form method="post" onSubmit={handleSubmit} className="request-form">

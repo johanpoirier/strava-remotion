@@ -10,8 +10,9 @@ const {
 const {exec} = require('child_process');
 
 const cronSchedule = '* * * * *';
+const outputDir = '/var/www/strava-resume/public/renders';
 
-const cronJob = async function () {
+const renderJob = async function () {
     if (await isRenderInProgress()) {
         console.log('render already in progress');
         return;
@@ -25,7 +26,13 @@ const cronJob = async function () {
     console.log(`Render ${render.id} with token ${render.token}`);
     await markRenderAsInProgress(render.id);
 
-    const cmd = `cd .. && npm run render -- InMotion out/render-${render.id}.mp4 --props='{"token": "${render.token}", "activityCount": ${render.activityCount}}'`;
+    const renderProps = {
+        token: render.token,
+        activityCount: render.activityCount,
+        userId: render.userId
+    };
+
+    const cmd = `cd .. && npm run render -- InMotion ${outputDir}/render-${render.id}.mp4 --props='${JSON.stringify(renderProps)}'`;
     exec(cmd, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -43,7 +50,6 @@ const cronJob = async function () {
 }
 
 cleanRenderingJobs().then(() => {
-    cron.schedule(cronSchedule, cronJob);
+    cron.schedule(cronSchedule, renderJob);
     console.log(`Cronjob is started (${cronSchedule})`);
-    cronJob();
 }).catch(console.error);

@@ -1,6 +1,5 @@
-export async function addRenderRequest({token, activityCount}: {token: string, activityCount: number}) {
-    const data = {userId: 'test', token, activityCount};
-    console.log('addRenderRequest', data);
+export async function addRenderRequest({userId, token, activityCount}: {userId: string, token: string, activityCount: number}) {
+    const data = {userId, token, activityCount};
     const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/render`, {
         method: 'POST',
         headers: {

@@ -6,7 +6,7 @@ const db = new sqlite3.Database(dbName, err => {
     if (err) {
         return console.error(err.message);
     }
-    console.log('SQLite database is up.');
+    console.log('Database is up.');
 });
 
 function setup() {
@@ -26,7 +26,7 @@ function setup() {
     });
 }
 
-async function addRender(userId, token, activityCount) {
+async function addRender({userId, token, activityCount}) {
     return new Promise((resolve, reject) => {
         const rendersAdd = `INSERT INTO renders (userId, token, activityCount) VALUES ('${userId}', '${token}', ${activityCount});`;
         db.run(rendersAdd, function (err, result) {

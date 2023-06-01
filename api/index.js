@@ -39,7 +39,11 @@ app.get('/api/render/:id', async (req, res) => {
 app.options('/api/render', cors());
 app.post('/api/render', cors(), async (req, res) => {
     try {
-        const renderId = await addRender(req.body.userId, req.body.token, req.body.activityCount);
+        const renderId = await addRender({
+            userId: req.body.userId,
+            token: req.body.token,
+            activityCount: req.body.activityCount
+        });
         res.send({renderId}).status(200).send();
     } catch (error) {
         res.status(500).send();
