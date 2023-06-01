@@ -9,6 +9,7 @@ import {DataContext} from '../contexts/DataContext';
 import {UserContext} from '../contexts/UserContext';
 import Preview from '../components/Preview';
 import RequestForm from '../components/RequestForm';
+import RenderList from '../components/RenderList';
 
 export default function Root() {
     const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function Root() {
         <UserContext.Provider value={athlete}>
             <DataContext.Provider value={activities}>
                 <RequestForm/>
+                <RenderList/>
                 <Preview/>
             </DataContext.Provider>
         </UserContext.Provider>

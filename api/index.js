@@ -12,7 +12,7 @@ app.listen(3004, () => {
     setup();
 });
 
-app.get('/api/user/:userId/renders', async (req, res) => {
+app.get('/api/user/:userId/renders', cors(), async (req, res) => {
     try {
         const renders = await getRendersByUserId(req.params.userId);
         if (!renders) {
