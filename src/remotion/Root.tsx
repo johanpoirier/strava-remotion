@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Composition, continueRender, delayRender} from 'remotion';
+import {Composition, continueRender, delayRender, getInputProps} from 'remotion';
 import {DataContext} from '../contexts/DataContext';
 import {MyActivities} from './MyActivities';
 import {MyActivity} from '../models/MyActivity';
@@ -11,14 +11,15 @@ import {fetchAthleteActivities} from '../services/data';
 Cabin.loadFont('normal', {weights: ['400', '700']});
 Cabin.loadFont('italic', {weights: ['400']});
 
-const accessToken = process.env.REACT_APP_ACCESS_TOKEN!;
+// @ts-ignore
+const { token } = getInputProps();
 
 export const RemotionRoot: React.FC = () => {
     const [handle] = useState(() => delayRender());
     const [activities, setActivities] = useState<MyActivity[]>([]);
 
     useEffect(() => {
-        fetchAthleteActivities(accessToken)
+        fetchAthleteActivities(token)
             .then(activities => {
                 setActivities(activities);
                 continueRender(handle);

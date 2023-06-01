@@ -81,4 +81,53 @@ async function getRendersToRun() {
     });
 }
 
-module.exports = {setup, addRender, getRenderById, getRendersByUserId, getRendersToRun};
+async function getFirstRenderToRun() {
+    return new Promise((resolve, reject) => {
+        const renderGet = 'SELECT * FROM renders where status = 0 ORDER BY createdAt ASC LIMIT 1';
+        db.get(renderGet, function (err, result) {
+            if (err) {
+                reject(new Error(err.message, err));
+                return;
+            }
+            resolve(result);
+        });
+    });
+}
+
+async function markRenderAsDone(renderId) {
+    return new Promise((resolve, reject) => {
+        const renderUpdate = `UPDATE renders SET status = 2 WHERE id = ${renderId};`;
+        db.run(renderUpdate, function (err, result) {
+            if (err) {
+                console.error(err.message);
+                reject(new Error('Failed to update render', err));
+                return;
+            }
+            resolve();
+        });
+    });
+}
+
+async function markRenderAsInProgress(renderId) {
+    return new Promise((resolve, reject) => {
+        const renderUpdate = `UPDATE renders SET status = 1 WHERE id = ${renderId};`;
+        db.run(renderUpdate, function (err, result) {
+            if (err) {
+                console.error(err.message);
+                reject(new Error('Failed to update render', err));
+                return;
+            }
+            resolve();
+        });
+    });
+}
+
+module.exports = {
+    setup,
+    addRender,
+    getRenderById,
+    getRendersByUserId,
+    getFirstRenderToRun,
+    markRenderAsInProgress,
+    markRenderAsDone
+};
