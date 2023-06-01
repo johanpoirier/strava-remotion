@@ -13,8 +13,26 @@ export default function RenderList() {
         fetchUserRenderList(athlete.id).then(setRenderList);
     }, [athlete]);
 
+    const getStatus = (statusCode: number): string => {
+        switch (statusCode) {
+            case 0:
+                return 'created';
+            case 1:
+                return 'rendering';
+            case 2:
+                return 'ready';
+            case 3:
+                return 'error';
+            default:
+                return '?';
+        }
+    }
+
     const displayRender = (render: any) => {
-        return (<li>Render { render.id } --- <a href={`/out/render-${render.id}.mp4`}>Download</a></li>);
+        if (render.status === 2) {
+            return (<li><a href={`/out/render-${render.id}.mp4`}>Download render { render.id }</a></li>);
+        }
+        return (<li>Render { render.id } -- { getStatus(render.status) }</li>);
     };
 
     return (
