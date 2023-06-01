@@ -14,6 +14,7 @@ function setup() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       userId VARCHAR(10) NOT NULL,
       token VARCHAR(250) NOT NULL,
+      activityCount INTEGER(2) DEFAULT 5,
       createdAt INTEGER(4) NOT NULL default (strftime('%s','now')),
       status INTEGER(1) DEFAULT 0
     );`;
@@ -25,9 +26,9 @@ function setup() {
     });
 }
 
-async function addRender(userId, token) {
+async function addRender(userId, token, activityCount) {
     return new Promise((resolve, reject) => {
-        const rendersAdd = `INSERT INTO renders (userId, token) VALUES ('${userId}', '${token}');`;
+        const rendersAdd = `INSERT INTO renders (userId, token, activityCount) VALUES ('${userId}', '${token}', ${activityCount});`;
         db.run(rendersAdd, function (err, result) {
             if (err) {
                 console.error(err.message);
@@ -50,6 +51,19 @@ async function getRenderById(renderId) {
                 return;
             }
             resolve(result);
+        });
+    });
+}
+
+async function getRenders() {
+    return new Promise((resolve, reject) => {
+        const rendersGet = 'SELECT * FROM renders';
+        db.all(rendersGet, function (err, results) {
+            if (err) {
+                reject(new Error(err.message, err));
+                return;
+            }
+            resolve(results);
         });
     });
 }
@@ -94,6 +108,19 @@ async function getFirstRenderToRun() {
     });
 }
 
+async function isRenderInProgress() {
+    return new Promise((resolve, reject) => {
+        const rendersGet = 'SELECT * FROM renders where status = 1';
+        db.get(rendersGet, function (err, results) {
+            if (err) {
+                reject(new Error(err.message, err));
+                return;
+            }
+            resolve(results && results.length > 0);
+        });
+    });
+}
+
 async function markRenderAsDone(renderId) {
     return markRender(renderId, 2);
 }
@@ -110,7 +137,7 @@ async function markRender(renderId, status) {
     return new Promise((resolve, reject) => {
         const renderUpdate = `UPDATE renders SET status = ? WHERE id = ${renderId};`;
         const params = [status];
-        db.run(renderUpdate, params,function (err, result) {
+        db.run(renderUpdate, params,function (err) {
             if (err) {
                 console.error(err.message);
                 reject(new Error('Failed to update render', err));
@@ -121,13 +148,30 @@ async function markRender(renderId, status) {
     });
 }
 
+async function cleanRenderingJobs() {
+    return new Promise((resolve, reject) => {
+        const rendersUpdate = 'UPDATE renders SET status = 0 WHERE status = 1;';
+        db.run(rendersUpdate, function (err) {
+            if (err) {
+                console.error(err.message);
+                reject(new Error('Failed to clean renders', err));
+                return;
+            }
+            resolve();
+        });
+    });
+}
+
 module.exports = {
     setup,
     addRender,
+    getRenders,
     getRenderById,
     getRendersByUserId,
     getFirstRenderToRun,
     markRenderAsInProgress,
     markRenderAsDone,
-    markRenderAsFailed
+    markRenderAsFailed,
+    isRenderInProgress,
+    cleanRenderingJobs
 };

@@ -5,21 +5,21 @@ import {MyActivities} from './MyActivities';
 import {MyActivity} from '../models/MyActivity';
 import * as Cabin from '@remotion/google-fonts/Cabin';
 import './style.css';
-import {ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../tools/constants';
+import {ACTIVITY_COUNT_TO_RENDER, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../tools/constants';
 import {fetchAthleteActivities} from '../services/data';
 
 Cabin.loadFont('normal', {weights: ['400', '700']});
 Cabin.loadFont('italic', {weights: ['400']});
 
 // @ts-ignore
-const { token } = getInputProps();
+const { token, activityCount = ACTIVITY_COUNT_TO_RENDER } = getInputProps();
 
 export const RemotionRoot: React.FC = () => {
     const [handle] = useState(() => delayRender());
     const [activities, setActivities] = useState<MyActivity[]>([]);
 
     useEffect(() => {
-        fetchAthleteActivities(token)
+        fetchAthleteActivities(token, activityCount)
             .then(activities => {
                 setActivities(activities);
                 continueRender(handle);
