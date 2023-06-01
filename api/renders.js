@@ -95,23 +95,22 @@ async function getFirstRenderToRun() {
 }
 
 async function markRenderAsDone(renderId) {
-    return new Promise((resolve, reject) => {
-        const renderUpdate = `UPDATE renders SET status = 2 WHERE id = ${renderId};`;
-        db.run(renderUpdate, function (err, result) {
-            if (err) {
-                console.error(err.message);
-                reject(new Error('Failed to update render', err));
-                return;
-            }
-            resolve();
-        });
-    });
+    return markRender(renderId, 2);
 }
 
 async function markRenderAsInProgress(renderId) {
+    return markRender(renderId, 1);
+}
+
+async function markRenderAsFailed(renderId) {
+    return markRender(renderId, 3);
+}
+
+async function markRender(renderId, status) {
     return new Promise((resolve, reject) => {
-        const renderUpdate = `UPDATE renders SET status = 1 WHERE id = ${renderId};`;
-        db.run(renderUpdate, function (err, result) {
+        const renderUpdate = `UPDATE renders SET status = ? WHERE id = ${renderId};`;
+        const params = [status];
+        db.run(renderUpdate, params,function (err, result) {
             if (err) {
                 console.error(err.message);
                 reject(new Error('Failed to update render', err));
@@ -129,5 +128,6 @@ module.exports = {
     getRendersByUserId,
     getFirstRenderToRun,
     markRenderAsInProgress,
-    markRenderAsDone
+    markRenderAsDone,
+    markRenderAsFailed
 };

@@ -1,8 +1,8 @@
 const cron = require('node-cron');
-const {getFirstRenderToRun, markRenderAsInProgress, markRenderAsDone} = require('./renders');
+const {getFirstRenderToRun, markRenderAsInProgress, markRenderAsDone, markRenderAsFailed} = require('./renders');
 const {exec} = require('child_process');
 
-const cronSchedule = '* * * * *';
+const cronSchedule = '*/2 * * * *';
 
 const cronJob = function () {
     getFirstRenderToRun().then(async (render) => {
@@ -15,10 +15,12 @@ const cronJob = function () {
         exec(cmd, (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
+                markRenderAsFailed(render.id);
                 return;
             }
             if (stderr) {
                 console.log(`stderr: ${stderr}`);
+                markRenderAsFailed(render.id);
                 return;
             }
             console.log(`stdout: ${stdout}`);
