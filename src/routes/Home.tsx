@@ -5,9 +5,8 @@ import { getAccessToken, isLoggedIn } from '../services/auth';
 import { getDataForStore } from '../services/data';
 import { Store } from '../models/Store';
 import { StoreContext } from '../contexts/StoreContext';
-import Preview from '../components/Preview';
-import RequestForm from '../components/RequestForm';
-import RenderList from '../components/RenderList';
+import Welcome from '../components/Welcome';
+import ActivityList from '../components/ActivityList';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -35,11 +34,14 @@ export default function Home() {
     fetchData();
   }, [fetchData]);
 
+  if (!store) {
+    return <span>…</span>;
+  }
+
   return (
     <StoreContext.Provider value={store}>
-      <RequestForm />
-      <RenderList />
-      <Preview />
+      <Welcome />
+      <ActivityList />
     </StoreContext.Provider>
   );
 }

@@ -29,6 +29,10 @@ export const RemotionRoot: React.FC = () => {
       });
   }, [handle]);
 
+  if (!store) {
+    return <span></span>;
+  }
+
   return (
     <StoreContext.Provider value={store}>
       <Composition

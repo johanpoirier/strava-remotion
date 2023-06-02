@@ -4,14 +4,14 @@ import { StoreContext } from '../../contexts/StoreContext';
 
 export default function RenderList() {
   const [renderList, setRenderList] = useState<any[]>([]);
-  const store = useContext(StoreContext);
+  const { athlete } = useContext(StoreContext);
 
   useEffect(() => {
-    if (!store?.athlete) {
+    if (!athlete) {
       return;
     }
-    fetchUserRenderList(store.athlete.id).then(setRenderList);
-  }, [store?.athlete]);
+    fetchUserRenderList(athlete.id).then(setRenderList);
+  }, [athlete]);
 
   const getStatus = (statusCode: number): string => {
     switch (statusCode) {

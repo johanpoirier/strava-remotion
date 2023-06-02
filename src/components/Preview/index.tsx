@@ -6,16 +6,16 @@ import { StoreContext } from '../../contexts/StoreContext';
 import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND } from '../../tools/constants';
 
 function Preview() {
-  const store = useContext(StoreContext);
+  const { activities } = useContext(StoreContext);
 
   const renderPlayer = () => {
-    if (!store || store?.activities.length === 0) {
+    if (activities.length === 0) {
       return <span>Loading…</span>;
     }
     return (
       <Player
         component={MyActivities}
-        durationInFrames={Math.round((store.activities.length * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)}
+        durationInFrames={Math.round((activities.length * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)}
         compositionWidth={1280}
         compositionHeight={720}
         fps={30}

@@ -5,7 +5,7 @@ import { getAccessToken } from '../../services/auth';
 import { StoreContext } from '../../contexts/StoreContext';
 
 export default function RequestForm() {
-  const store = useContext(StoreContext);
+  const { athlete } = useContext(StoreContext);
 
   const handleSubmit = useCallback(
     (e: any) => {
@@ -22,18 +22,13 @@ export default function RequestForm() {
         return;
       }
 
-      if (!store?.athlete) {
-        console.error('Unknown athlete…');
-        return;
-      }
-
       addRenderRequest({
-        userId: store?.athlete.id,
+        userId: athlete.id,
         token,
         activityCount: parseInt(formJson.activityCount.toString(), 10),
       }).catch(console.error);
     },
-    [store?.athlete],
+    [athlete],
   );
 
   return (
