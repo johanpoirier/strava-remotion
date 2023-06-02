@@ -1,51 +1,46 @@
-import React, {useEffect, useState} from 'react';
-import {Composition, continueRender, delayRender, getInputProps} from 'remotion';
+import React, { useEffect, useState } from 'react';
+import { Composition, continueRender, delayRender, getInputProps } from 'remotion';
 import * as Cabin from '@remotion/google-fonts/Cabin';
 import './style.css';
-import {getAthleteActivities, getAthlete} from '../services/data';
-import {DataContext} from '../contexts/DataContext';
-import {UserContext} from '../contexts/UserContext';
-import {MyActivity} from '../models/MyActivity';
-import {Athlete} from '../models/Athlete';
-import {ACTIVITY_COUNT_TO_RENDER, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND} from '../tools/constants';
-import {MyActivities} from './MyActivities';
+import { getDataForStore } from '../services/data';
+import { StoreContext } from '../contexts/StoreContext';
+import { ACTIVITY_COUNT_TO_RENDER, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND } from '../tools/constants';
+import { MyActivities } from './MyActivities';
+import { Store } from '../models/Store';
 
-Cabin.loadFont('normal', {weights: ['400', '700']});
-Cabin.loadFont('italic', {weights: ['400']});
+Cabin.loadFont('normal', { weights: ['400', '700'] });
+Cabin.loadFont('italic', { weights: ['400'] });
 
 // @ts-ignore
 const { token, activityCount = ACTIVITY_COUNT_TO_RENDER } = getInputProps();
 
 export const RemotionRoot: React.FC = () => {
-    const [handle] = useState(() => delayRender());
-    const [athlete, setAthlete] = useState<Athlete>();
-    const [activities, setActivities] = useState<MyActivity[]>([]);
+  const [handle] = useState(() => delayRender());
+  const [store, setStore] = useState<Store>();
 
-    useEffect(() => {
-        getAthlete(token)
-            .then(setAthlete)
-            .then(() => getAthleteActivities(token, activityCount))
-            .then(activities => {
-                setActivities(activities);
-                continueRender(handle);
-            })
-            .catch(error => {
-                console.log('Fetching error', error);
-            });
-    }, [handle]);
+  useEffect(() => {
+    getDataForStore(token)
+      .then((store: Store) => {
+        setStore(store);
+        continueRender(handle);
+      })
+      .catch((error: any) => {
+        console.log('Fetching error', error);
+      });
+  }, [handle]);
 
-    return (
-        <UserContext.Provider value={athlete}>
-            <DataContext.Provider value={activities}>
-                <Composition
-                    id="InMotion"
-                    component={MyActivities}
-                    durationInFrames={Math.round((activities.length * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000) || 1}
-                    fps={FRAME_PER_SECOND}
-                    width={1280}
-                    height={720}
-                />
-            </DataContext.Provider>
-        </UserContext.Provider>
-    );
+  return (
+    <StoreContext.Provider value={store}>
+      <Composition
+        id="InMotion"
+        component={MyActivities}
+        durationInFrames={
+          Math.round(((store?.activities.length ?? 1) * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000) || 1
+        }
+        fps={FRAME_PER_SECOND}
+        width={1280}
+        height={720}
+      />
+    </StoreContext.Provider>
+  );
 };
