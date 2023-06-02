@@ -1,0 +1,6 @@
+server/
+build/
+out/
+public/
+node_modules/
+api/

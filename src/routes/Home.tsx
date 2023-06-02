@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {continueRender, delayRender} from 'remotion';
-import {isLoggedIn} from '../services/auth';
+import {getAccessToken, isLoggedIn} from '../services/auth';
 import {getAthleteActivities, getAthlete} from '../services/data';
 import {Athlete} from '../models/Athlete';
 import {MyActivity} from '../models/MyActivity';
@@ -11,10 +11,10 @@ import Preview from '../components/Preview';
 import RequestForm from '../components/RequestForm';
 import RenderList from '../components/RenderList';
 
-export default function Root() {
+export default function Home() {
     const navigate = useNavigate();
 
-    const [accessToken] = useState<string | null>(localStorage.getItem('atkn'));
+    const [accessToken] = useState<string | null>(getAccessToken);
     const [athlete, setAthlete] = useState<Athlete>();
     const [activities, setActivities] = useState<MyActivity[]>([]);
     const [handle] = useState(() => delayRender());
