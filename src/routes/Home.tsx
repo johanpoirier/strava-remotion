@@ -7,6 +7,8 @@ import { Store } from '../models/Store';
 import { StoreContext } from '../contexts/StoreContext';
 import Welcome from '../components/Welcome';
 import ActivityList from '../components/ActivityList';
+import Preview from '../components/Preview';
+import PreviewZone from '../components/PreviewZone';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -42,6 +44,7 @@ export default function Home() {
     <StoreContext.Provider value={store}>
       <Welcome />
       <ActivityList />
+      <PreviewZone />
     </StoreContext.Provider>
   );
 }

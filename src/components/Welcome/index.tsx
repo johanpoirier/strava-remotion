@@ -5,5 +5,5 @@ import { StoreContext } from '../../contexts/StoreContext';
 export default function RenderList() {
   const { athlete } = useContext(StoreContext);
 
-  return <header>Welcome {athlete.firstname}!</header>;
+  return <header>Hello {athlete.firstname}!</header>;
 }

@@ -1,7 +1,10 @@
 header {
+  background-color: #fc5200;
+  color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 0.2em;
   text-align: center;
   width: 100%;
 }

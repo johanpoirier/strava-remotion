@@ -1,4 +1,4 @@
-import { fetchAthleteActivities, fetchActivityStreams, fetchAthlete } from './strava.mock';
+import { fetchAthleteActivities, fetchActivityStreams, fetchAthlete } from './strava';
 import { buildMyActivity } from '../models/MyActivity';
 import { buildAthlete } from '../models/Athlete';
 import { ACTIVITY_COUNT_TO_RENDER } from '../tools/constants';
