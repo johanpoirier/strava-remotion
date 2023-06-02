@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useState } from 'react';
 import './style.css';
 import { StoreContext } from '../../contexts/StoreContext';
 import Player from '../Player';
+import RequestForm from '../RequestForm';
 
 export default function PreviewZone() {
   const { activities } = useContext(StoreContext);
@@ -15,9 +16,12 @@ export default function PreviewZone() {
 
   return (
     <section className="preview-zone">
-      <button type="button" onClick={() => setDisplayPreview(true)}>
-        Generate preview
-      </button>
+      <div className="preview-zone-actions">
+        <button type="button" onClick={() => setDisplayPreview(true)}>
+          Generate preview
+        </button>
+        <RequestForm />
+      </div>
       {renderPreview}
     </section>
   );
