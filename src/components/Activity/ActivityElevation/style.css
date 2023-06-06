@@ -1,19 +1,22 @@
-.ActivityElevation {
-    display: flex;
-    grid-area: elevation;
+.activity-elevation-graph {
     height: 80px;
+    left: 0;
+    position: absolute;
+    top: 0;
     width: 1280px;
+    z-index: 2;
 }
 
-.ActivityElevation .elevation-axis {
-    background: linear-gradient(90deg, rgba(0,0,0,0) calc(50% - 1px), rgba(192,192,192,1) calc(50%), rgba(0,0,0,0) 50%);
+.activity-elevation-axis {
     display: flex;
     flex-direction: column;
     font-size: 0.5em;
+    height: 80px;
     justify-content: space-between;
+    left: 0;
+    mix-blend-mode: difference;
+    position: absolute;
+    top: 0;
     width: 60px;
-}
-
-.ActivityElevation .elevation-axis span {
-    background-color: white;
+    z-index: 3;
 }

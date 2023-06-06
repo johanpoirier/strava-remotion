@@ -1,18 +1,21 @@
-.Activity {
+.activity {
     display: grid;
     font-size: 32px;
-    grid-template-areas: 'logo title' 'data map' 'elevation elevation';
+    grid-template-areas: 'header' 'map';
 }
 
-.ActivityLogo {
+.activity-logo {
     align-self: center;
-    grid-area: logo;
+    bottom: 4px;
     justify-self: center;
+    left: 4px;
     max-height: 60px;
     max-width: 92px;
+    position: absolute;
+    z-index: 400;
 }
 
-.ActivityData {
+.activity-data {
     background-color: #fc5200;
     color: white;
     display: flex;
@@ -21,7 +24,7 @@
     width: 100px;
 }
 
-.ActivityDataDetail {
+.activity-data-detail {
     font-size: 80%;
     padding: 0.5em 0;
 }

@@ -9,8 +9,8 @@ import {
 import './style.css';
 
 const CANVAS_HEIGHT = 80;
-const CANVAS_WIDTH = 1220;
-const FILL_COLOR = '#e86322';
+const CANVAS_WIDTH = 1280;
+const FILL_COLOR = 'black';
 
 export default function ActivityElevation({
   id,
@@ -30,14 +30,15 @@ export default function ActivityElevation({
   }, [times]);
 
   const elevationMin: number = useMemo(() => Math.min(...elevations), [elevations]);
+  const elevationGain: number = useMemo(() => Math.max(...elevations) - elevationMin, [elevations, elevationMin]);
+
   const elevationMax: number = useMemo(() => {
     const max: number = Math.max(...elevations);
-    const elevationGain: number = max - elevationMin;
     if (elevationGain < MIN_ELEVATION_GAIN) {
       return max + MIN_ELEVATION_GAIN - elevationGain;
     }
     return max;
-  }, [elevations, elevationMin]);
+  }, [elevations, elevationGain, elevationMin]);
 
   const elevationRatio: number = useMemo(() => {
     return (elevationMax - elevationMin) / (CANVAS_HEIGHT - 10);
@@ -91,12 +92,18 @@ export default function ActivityElevation({
   }, [drawLine, elevations, times, frame, canvasRef, pointsPerFrame]);
 
   return (
-    <div className="ActivityElevation">
-      <div className="elevation-axis">
+    <>
+      <canvas
+        className="activity-elevation-graph"
+        id={elevationId}
+        ref={canvasRef}
+        width={`${CANVAS_WIDTH}px`}
+        height={`${CANVAS_HEIGHT}px`}
+      ></canvas>
+      <div className="activity-elevation-axis">
         <span>{Math.round(elevationMax)} m</span>
         <span>{Math.round(elevationMin)} m</span>
       </div>
-      <canvas id={elevationId} ref={canvasRef} width={`${CANVAS_WIDTH}px`} height={`${CANVAS_HEIGHT}px`}></canvas>
-    </div>
+    </>
   );
 }
