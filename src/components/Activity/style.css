@@ -16,15 +16,16 @@
 }
 
 .activity-data {
-    background-color: #fc5200;
-    color: white;
     display: flex;
     flex-direction: column;
-    grid-area: data;
-    width: 100px;
+    left: 0;
+    position: absolute;
+    top: 180px;
+    z-index: 401;
 }
 
 .activity-data-detail {
     font-size: 80%;
-    padding: 0.5em 0;
+    padding: 0.5em;
+    text-align: left;
 }
