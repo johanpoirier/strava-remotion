@@ -9,6 +9,7 @@ import Welcome from '../components/Welcome';
 import ActivityList from '../components/ActivityList';
 import Preview from '../components/Preview';
 import PreviewZone from '../components/PreviewZone';
+import { Puff } from 'react-loader-spinner';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -37,7 +38,24 @@ export default function Home() {
   }, [fetchData]);
 
   if (!store) {
-    return <span>…</span>;
+    return (
+      <Puff
+        height="80"
+        width="80"
+        radius={1}
+        color="#fc5200"
+        ariaLabel="puff-loading"
+        wrapperStyle={{
+          width: '100vw',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        wrapperClass=""
+        visible={true}
+      />
+    );
   }
 
   return (
