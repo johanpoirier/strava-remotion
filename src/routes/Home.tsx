@@ -7,9 +7,9 @@ import { Store } from '../models/Store';
 import { StoreContext } from '../contexts/StoreContext';
 import Welcome from '../components/Welcome';
 import ActivityList from '../components/ActivityList';
-import Preview from '../components/Preview';
 import PreviewZone from '../components/PreviewZone';
 import { Puff } from 'react-loader-spinner';
+import './home.css';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -60,9 +60,11 @@ export default function Home() {
 
   return (
     <StoreContext.Provider value={store}>
-      <Welcome />
-      <ActivityList />
-      <PreviewZone />
+      <main className="home">
+        <Welcome />
+        <ActivityList />
+        <PreviewZone />
+      </main>
     </StoreContext.Provider>
   );
 }

@@ -27,6 +27,10 @@ export async function refreshAccessTokens(refreshToken: string): Promise<object>
   return response.json();
 }
 
+function sortActivitiesByDate(a: { start_date: string }, b: { start_date: string }): 1 | -1 {
+  return a.start_date > b.start_date ? 1 : -1;
+}
+
 export async function fetchAthleteActivities(
   token: string,
   { activityCount }: { activityCount: number },
@@ -41,9 +45,23 @@ export async function fetchAthleteActivities(
     throw Error(`fetchActivities failed: ${response.statusText}`);
   }
   const activities = await response.json();
-  return activities.sort((a: { start_date: string }, b: { start_date: string }) =>
-    a.start_date > b.start_date ? 1 : -1,
-  );
+  return activities.sort(sortActivitiesByDate);
+}
+
+export async function fetchAthleteActivitiesFromDate(token: string, fromDate: Date): Promise<any[]> {
+  const activitiesUrl = `https://www.strava.com/api/v3/athlete/activities?after=${Math.round(
+    fromDate.getTime() / 1000,
+  )}`;
+  const response: Response = await fetch(activitiesUrl, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw Error(`fetchActivities failed: ${response.statusText}`);
+  }
+  const activities = await response.json();
+  return activities.sort(sortActivitiesByDate);
 }
 
 export async function fetchActivity(token: string, activityId: string): Promise<any> {

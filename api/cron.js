@@ -32,7 +32,6 @@ const renderJob = async function () {
 
   const renderProps = {
     token: render.token,
-    activityCount: render.activityCount,
     userId: render.userId,
   };
 

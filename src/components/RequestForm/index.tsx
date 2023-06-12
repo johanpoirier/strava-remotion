@@ -11,10 +11,10 @@ export default function RequestForm() {
     (e: any) => {
       e.preventDefault();
 
-      const form = e.target;
-      const formData = new FormData(form);
-
-      const formJson = Object.fromEntries(formData.entries());
+      // const form = e.target;
+      // const formData = new FormData(form);
+      //
+      // const formJson = Object.fromEntries(formData.entries());
 
       const token = getAccessToken();
       if (!token) {
@@ -25,7 +25,6 @@ export default function RequestForm() {
       addRenderRequest({
         userId: athlete.id,
         token,
-        activityCount: parseInt(formJson.activityCount.toString(), 10),
       }).catch(console.error);
     },
     [athlete],
@@ -33,11 +32,7 @@ export default function RequestForm() {
 
   return (
     <form method="post" onSubmit={handleSubmit} className="request-form">
-      <label>
-        Number of activities:
-        <input name="activityCount" type="number" defaultValue="5" />
-      </label>
-      <button type="submit">Generate</button>
+      <button type="submit">Request render</button>
     </form>
   );
 }

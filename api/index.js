@@ -42,7 +42,6 @@ app.post('/api/render', cors(), async (req, res) => {
     const renderId = await addRender({
       userId: req.body.userId,
       token: req.body.token,
-      activityCount: req.body.activityCount,
     });
     res.send({ renderId }).status(200).send();
   } catch (error) {

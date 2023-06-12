@@ -18,7 +18,7 @@ export default function PreviewZone() {
     <section className="preview-zone">
       <div className="preview-zone-actions">
         <button type="button" onClick={() => setDisplayPreview(true)}>
-          Generate preview
+          Show preview
         </button>
         <RequestForm />
       </div>

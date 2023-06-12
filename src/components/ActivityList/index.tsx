@@ -18,7 +18,8 @@ export default function ActivityList() {
 
   return (
     <section className="activity-list">
-      <p>Welcome to Strava in motion. We will generate a video of your {ACTIVITY_COUNT_TO_RENDER} last activities:</p>
+      <p>Welcome to Strava in motion!</p>
+      <p>We will generate a video of your activities from the past 7 days:</p>
       <ul>{activities.slice(activities.length - ACTIVITY_COUNT_TO_RENDER).map(displayActivity)}</ul>
     </section>
   );

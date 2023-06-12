@@ -1,11 +1,11 @@
-import { fetchAthleteActivities, fetchActivityStreams, fetchAthlete } from './strava';
+import { fetchActivityStreams, fetchAthlete, fetchAthleteActivitiesFromDate } from './strava';
 import { buildMyActivity } from '../models/MyActivity';
 import { buildAthlete } from '../models/Athlete';
-import { ACTIVITY_COUNT_TO_RENDER } from '../tools/constants';
 import { Store } from '../models/Store';
 
-export async function fetchActivities(accessToken: string, activityCount: number = ACTIVITY_COUNT_TO_RENDER) {
-  const stravaActivities: any[] = await fetchAthleteActivities(accessToken, { activityCount });
+const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
+export async function fetchActivities(accessToken: string, fromDate: Date = new Date(Date.now() - ONE_WEEK_IN_MS)) {
+  const stravaActivities: any[] = await fetchAthleteActivitiesFromDate(accessToken, fromDate);
   const streams: any[] = await Promise.all(
     stravaActivities.map(({ id }) => fetchActivityStreams(accessToken, id, ['time', 'altitude'])),
   );
@@ -23,7 +23,7 @@ export async function fetchUser(accessToken: string) {
 
 export async function getDataForStore(accessToken: string): Promise<Store> {
   const athlete = await fetchUser(accessToken);
-  const activities = await fetchActivities(accessToken, 10);
+  const activities = await fetchActivities(accessToken);
 
   return {
     athlete,

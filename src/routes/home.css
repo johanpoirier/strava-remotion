@@ -1,0 +1,8 @@
+@media only screen and (min-width: 1024px) {
+    .home {
+        box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+        height: 100vh;
+        max-width: 1024px;
+        margin: 0 auto;
+    }
+}
