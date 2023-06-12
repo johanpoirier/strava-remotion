@@ -1,28 +1,38 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import './style.css';
 import { StoreContext } from '../../contexts/StoreContext';
 import Player from '../Player';
 import RequestForm from '../RequestForm';
+import RenderList from '../RenderList';
 
 export default function PreviewZone() {
   const { activities } = useContext(StoreContext);
 
-  const [displayPreview, setDisplayPreview] = useState(false);
+  const [shouldDisplayPreview, setShouldDisplayPreview] = useState(false);
+  const [shouldDisplayRenderList, setShouldDisplayRenderList] = useState(false);
 
-  const renderPreview = useMemo(() => {
-    if (!displayPreview) return null;
+  const displayPreview = useMemo(() => {
+    if (!shouldDisplayPreview) return null;
     return <Player />;
-  }, [activities, displayPreview]);
+  }, [activities, shouldDisplayPreview]);
+
+  const displayRenderList = () => {
+    setShouldDisplayPreview(false);
+    setShouldDisplayRenderList(true);
+  };
 
   return (
     <section className="preview-zone">
       <div className="preview-zone-actions">
-        <button type="button" onClick={() => setDisplayPreview(true)}>
+        <button type="button" onClick={() => setShouldDisplayPreview(true)}>
           Show preview
         </button>
-        <RequestForm />
+        <RequestForm onRequest={displayRenderList} />
       </div>
-      {renderPreview}
+      <>
+        {displayPreview}
+        {shouldDisplayRenderList && <RenderList />}
+      </>
     </section>
   );
 }

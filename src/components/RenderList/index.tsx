@@ -11,6 +11,11 @@ export default function RenderList() {
       return;
     }
     fetchUserRenderList(athlete.id).then(setRenderList);
+
+    const interval = setInterval(() => {
+      fetchUserRenderList(athlete.id).then(setRenderList);
+    }, 10000);
+    return () => clearInterval(interval);
   }, [athlete]);
 
   const getStatus = (statusCode: number): string => {
@@ -31,7 +36,7 @@ export default function RenderList() {
   const displayRender = (render: any) => {
     if (render.status === 2) {
       return (
-        <li>
+        <li key={`render-${render.id}`}>
           <a href={`/out/render-${render.id}.mp4`}>Download render {render.id}</a>
         </li>
       );

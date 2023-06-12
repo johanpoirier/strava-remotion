@@ -4,7 +4,7 @@ import { addRenderRequest } from '../../services/api';
 import { getAccessToken } from '../../services/auth';
 import { StoreContext } from '../../contexts/StoreContext';
 
-export default function RequestForm() {
+export default function RequestForm({ onRequest }: { onRequest: () => void }) {
   const { athlete } = useContext(StoreContext);
 
   const handleSubmit = useCallback(
@@ -25,7 +25,9 @@ export default function RequestForm() {
       addRenderRequest({
         userId: athlete.id,
         token,
-      }).catch(console.error);
+      })
+        .then(onRequest)
+        .catch(console.error);
     },
     [athlete],
   );
