@@ -9,7 +9,6 @@ export default function PreviewZone() {
   const { activities } = useContext(StoreContext);
 
   const [shouldDisplayPreview, setShouldDisplayPreview] = useState(false);
-  const [shouldDisplayRenderList, setShouldDisplayRenderList] = useState(true);
 
   const displayPreview = useMemo(() => {
     if (!shouldDisplayPreview) return null;
@@ -18,7 +17,6 @@ export default function PreviewZone() {
 
   const displayRenderList = () => {
     setShouldDisplayPreview(false);
-    setShouldDisplayRenderList(true);
   };
 
   return (
@@ -31,7 +29,7 @@ export default function PreviewZone() {
       </div>
       <>
         {displayPreview}
-        {shouldDisplayRenderList && <RenderList />}
+        {!shouldDisplayPreview && <RenderList />}
       </>
     </section>
   );
