@@ -1,0 +1,15 @@
+.activity-data-detail {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    padding: 0.5em;
+    text-align: left;
+}
+
+.activity-data-detail-label {
+    font-size: 0.8em;
+}
+
+.activity-data-detail-value {
+    font-size: 1em;
+}

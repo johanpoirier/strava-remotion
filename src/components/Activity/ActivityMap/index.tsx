@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { continueRender, delayRender, useCurrentFrame } from 'remotion';
-import './style.css';
+import './activity-map.css';
 import 'leaflet/dist/leaflet.css';
 import { drawActivityMarker, drawActivityRoute, generateMap } from '../../../services/leaflet';
 import { ACTIVITY_MAP_LOAD_TIMEOUT } from '../../../tools/constants';

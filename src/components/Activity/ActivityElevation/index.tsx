@@ -6,7 +6,7 @@ import {
   FRAME_PER_SECOND,
   MIN_ELEVATION_GAIN,
 } from '../../../tools/constants';
-import './style.css';
+import './activity-elevation.css';
 
 const CANVAS_HEIGHT = 80;
 const CANVAS_WIDTH = 1280;

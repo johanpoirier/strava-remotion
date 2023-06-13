@@ -1,6 +1,6 @@
 import React from 'react';
 import { Img, staticFile } from 'remotion';
-import './style.css';
+import './activity-list-item.css';
 import { MyActivity } from '../../../models/MyActivity';
 import { getActivityLogo } from '../../../tools/activity-logo';
 

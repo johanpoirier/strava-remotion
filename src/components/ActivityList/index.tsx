@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './style.css';
+import './activity-list.css';
 import { StoreContext } from '../../contexts/StoreContext';
 import { MyActivity } from '../../models/MyActivity';
 import { ACTIVITY_COUNT_TO_RENDER } from '../../tools/constants';

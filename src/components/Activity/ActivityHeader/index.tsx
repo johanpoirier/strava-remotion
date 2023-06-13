@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './activity-header.css';
 import ActivityElevation from '../ActivityElevation';
 import { MyActivity } from '../../../models/MyActivity';
 
