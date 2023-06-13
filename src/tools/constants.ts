@@ -8,3 +8,4 @@ export const ACTIVITY_COUNT_TO_RENDER = 7;
 export const ACCESS_TOKEN_KEY = 'atkn';
 export const REFRESH_TOKEN_KEY = 'rtkn';
 export const TOKEN_EXPIRATION_KEY = 'texp';
+export const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;

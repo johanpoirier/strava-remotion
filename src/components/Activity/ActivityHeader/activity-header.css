@@ -4,9 +4,10 @@
     color: white;
     display: flex;
     flex-direction: row;
+    font-size: 2.4rem;
     grid-area: header;
     height: 80px;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 0.5em 0 2em;
     z-index: 1;
 }
@@ -23,13 +24,15 @@
 }
 
 .activity-header-title {
+    margin-left: auto;
     mix-blend-mode: exclusion;
     z-index: 3;
 }
 
 .activity-header-date {
-    font-size: 60%;
+    font-size: 50%;
     font-style: italic;
+    margin-left: auto;
     mix-blend-mode: difference;
     z-index: 3;
 }

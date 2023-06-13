@@ -1,9 +1,10 @@
 import { Series, Sequence } from 'remotion';
 import React, { useCallback, useContext } from 'react';
-import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION } from '../tools/constants';
+import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION, ONE_WEEK_IN_MS } from '../tools/constants';
 import Activity from '../components/Activity';
 import { StoreContext } from '../contexts/StoreContext';
 import Intro from '../components/Intro';
+import { formatTimeDate } from '../tools/format-date';
 
 export const MyActivities: React.FC = () => {
   const store = useContext(StoreContext);
@@ -36,7 +37,11 @@ export const MyActivities: React.FC = () => {
       }}
     >
       <Sequence from={0} durationInFrames={30}>
-        <Intro athlete={store.athlete} />
+        <Intro
+          athlete={store.athlete}
+          from={formatTimeDate(Date.now() - ONE_WEEK_IN_MS)}
+          to={formatTimeDate(Date.now())}
+        />
       </Sequence>
       {store?.activities.length ? renderActivities() : null}
     </div>

@@ -2,8 +2,8 @@ import { fetchActivityStreams, fetchAthlete, fetchAthleteActivitiesFromDate } fr
 import { buildMyActivity } from '../models/MyActivity';
 import { buildAthlete } from '../models/Athlete';
 import { Store } from '../models/Store';
+import { ONE_WEEK_IN_MS } from '../tools/constants';
 
-const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 export async function fetchActivities(accessToken: string, fromDate: Date = new Date(Date.now() - ONE_WEEK_IN_MS)) {
   const stravaActivities: any[] = await fetchAthleteActivitiesFromDate(accessToken, fromDate);
   const streams: any[] = await Promise.all(

@@ -10,7 +10,17 @@
     width: 100%;
 }
 
+.intro-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-sub-title {
+    font-size: 50%;
+}
+
 .intro-profile {
     border-radius: 1.5em;
+    margin-bottom: 1em;
     width: 3em;
 }

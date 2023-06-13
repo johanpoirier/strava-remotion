@@ -10,7 +10,7 @@
 .activity-elevation-axis {
     display: flex;
     flex-direction: column;
-    font-size: 0.5em;
+    font-size: 0.45em;
     height: 80px;
     justify-content: space-between;
     left: 0;

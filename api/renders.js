@@ -69,7 +69,7 @@ async function getRenders() {
 
 async function getRendersByUserId(userId) {
   return new Promise((resolve, reject) => {
-    const rendersGet = 'SELECT * FROM renders where userId = ?';
+    const rendersGet = 'SELECT * FROM renders WHERE userId = ? ORDER BY createdAt DESC';
     const params = [userId];
     db.all(rendersGet, params, function (err, results) {
       if (err) {
@@ -83,7 +83,7 @@ async function getRendersByUserId(userId) {
 
 async function getRendersToRun() {
   return new Promise((resolve, reject) => {
-    const rendersGet = 'SELECT * FROM renders where status = 0';
+    const rendersGet = 'SELECT * FROM renders where status = 0 ORDER BY createdAt ASC';
     db.all(rendersGet, function (err, results) {
       if (err) {
         reject(new Error(err.message, err));

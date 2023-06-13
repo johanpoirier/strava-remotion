@@ -1,12 +1,17 @@
 import React from 'react';
+import { Img } from 'remotion';
 import './intro.css';
 import { Athlete } from '../../models/Athlete';
-import { Img } from 'remotion';
 
-export default function Intro({ athlete }: { athlete: Athlete }) {
+export default function Intro({ athlete, from, to }: { athlete: Athlete; from: string; to: string }) {
   return (
     <section className="intro">
-      {athlete.firstname}’s past week activities
+      <p className="intro-title">
+        <span className="intro-main-title">{athlete.firstname}’s past week activities</span>
+        <span className="intro-sub-title">
+          (from {from} to {to})
+        </span>
+      </p>
       <Img src={athlete.profile} alt="" className="intro-profile" />
     </section>
   );

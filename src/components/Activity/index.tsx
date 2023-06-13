@@ -7,6 +7,8 @@ import { MyActivity } from '../../models/MyActivity';
 import ActivityHeader from './ActivityHeader';
 import ActivityMap from './ActivityMap';
 import ActivityDataDetail from './ActivityDataDetail';
+import { formatDuration } from '../../tools/format-duration';
+import { ActivityDetailType } from '../../tools/activity-detail-type.enum';
 
 export default function Activity({ data }: { data: MyActivity }) {
   const frame = useCurrentFrame();
@@ -25,9 +27,9 @@ export default function Activity({ data }: { data: MyActivity }) {
     <section className="activity">
       <ActivityHeader data={data} />
       <div className="activity-data" style={{ transform: `scale(${scale})` }}>
-        <ActivityDataDetail value={Math.round(data.distance / 1000)} unit="km" label="Distance" />
-        <ActivityDataDetail value={Math.round(data.duration / 60)} unit="min" label="Duration" />
-        <ActivityDataDetail value={Math.round(data.elevationGain)} unit="m" label="Elevation" />
+        <ActivityDataDetail value={Math.round(data.distance / 1000)} type={ActivityDetailType.Distance} />
+        <ActivityDataDetail value={formatDuration(data.duration)} type={ActivityDetailType.Duration} />
+        <ActivityDataDetail value={Math.round(data.elevationGain)} type={ActivityDetailType.Elevation} />
       </div>
       <ActivityMap id={data.id} pointsPerFrame={pointsPerFrame} coordinates={data.map} />
       <Img className="activity-logo" src={staticFile(`assets/${getActivityLogo(data.type)}`)} alt={data.type} />
