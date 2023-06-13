@@ -9,7 +9,7 @@ export default function PreviewZone() {
   const { activities } = useContext(StoreContext);
 
   const [shouldDisplayPreview, setShouldDisplayPreview] = useState(false);
-  const [shouldDisplayRenderList, setShouldDisplayRenderList] = useState(false);
+  const [shouldDisplayRenderList, setShouldDisplayRenderList] = useState(true);
 
   const displayPreview = useMemo(() => {
     if (!shouldDisplayPreview) return null;

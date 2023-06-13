@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import './render-list.css';
 import { fetchUserRenderList } from '../../services/api';
 import { StoreContext } from '../../contexts/StoreContext';
+import { formatTimeDate } from '../../tools/format-date';
 
 export default function RenderList() {
   const [renderList, setRenderList] = useState<any[]>([]);
@@ -27,7 +29,7 @@ export default function RenderList() {
       case 2:
         return 'ready';
       case 3:
-        return 'error';
+        return 'in error';
       default:
         return '?';
     }
@@ -37,16 +39,18 @@ export default function RenderList() {
     if (render.status === 2) {
       return (
         <li key={`render-${render.id}`}>
-          <a href={`/out/render-${render.id}.mp4`}>Download render {render.id}</a>
+          <a href={`/out/render-${render.id}.mp4`}>
+            Download video #{render.id} from {formatTimeDate(render.createdAt * 1000)}
+          </a>
         </li>
       );
     }
     return (
-      <li>
-        Render {render.id} -- {getStatus(render.status)}
+      <li key={`render-${render.id}`}>
+        Video request #{render.id} from {formatTimeDate(render.createdAt * 1000)} is {getStatus(render.status)}
       </li>
     );
   };
 
-  return <ul>{renderList.map(displayRender)}</ul>;
+  return <ul className="render-list">{renderList.map(displayRender)}</ul>;
 }
