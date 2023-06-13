@@ -23,7 +23,15 @@ export function decodeEncodedPolyline(encodedData: string): any[] {
 export function generateMap(elementId: string, coordinates: any[], onRenderComplete?: any): any {
   const canvasRenderer = L.canvas();
 
-  const map = new L.map(elementId, { renderer: canvasRenderer });
+  const map = new L.map(elementId, {
+    attributionControl: false,
+    dragging: false,
+    keyboard: false,
+    renderer: canvasRenderer,
+    scrollWheelZoom: false,
+    touchZoom: false,
+    zoomControl: false,
+  });
   map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));
   map.fitBounds(new L.LatLngBounds(coordinates));
 
