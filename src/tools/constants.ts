@@ -1,4 +1,5 @@
 export const FRAME_PER_SECOND = 30;
+export const INTRO_FRAME_DURATION = 30;
 export const ACTIVITY_VIDEO_DURATION = 3200;
 export const DISPLAY_FRAME_RATIO = 0.88;
 export const ACTIVITY_MAP_LOAD_TIMEOUT = 250;

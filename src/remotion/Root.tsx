@@ -4,7 +4,12 @@ import * as Cabin from '@remotion/google-fonts/Cabin';
 import './style.css';
 import { getDataForStore } from '../services/data';
 import { StoreContext } from '../contexts/StoreContext';
-import { ACTIVITY_COUNT_TO_RENDER, ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND } from '../tools/constants';
+import {
+  ACTIVITY_COUNT_TO_RENDER,
+  ACTIVITY_VIDEO_DURATION,
+  FRAME_PER_SECOND,
+  INTRO_FRAME_DURATION,
+} from '../tools/constants';
 import { MyActivities } from './MyActivities';
 import { Store } from '../models/Store';
 
@@ -39,7 +44,8 @@ export const RemotionRoot: React.FC = () => {
         id="InMotion"
         component={MyActivities}
         durationInFrames={
-          Math.round(((store?.activities.length ?? 1) * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000) || 1
+          INTRO_FRAME_DURATION +
+          Math.round(((store?.activities.length ?? 1) * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)
         }
         fps={FRAME_PER_SECOND}
         width={1280}

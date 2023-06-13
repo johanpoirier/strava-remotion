@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import './style.css';
 import { StoreContext } from '../../contexts/StoreContext';
 import Player from '../Player';

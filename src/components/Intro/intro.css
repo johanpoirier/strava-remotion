@@ -1,0 +1,16 @@
+.intro {
+    align-items: center;
+    background-color: #fc5200;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-size: 5rem;
+    height: 100%;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.intro-profile {
+    border-radius: 1.5em;
+    width: 3em;
+}

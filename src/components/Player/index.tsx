@@ -3,16 +3,18 @@ import './style.css';
 import { Player as RemotionPlayer } from '@remotion/player';
 import { MyActivities } from '../../remotion/MyActivities';
 import { StoreContext } from '../../contexts/StoreContext';
-import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND } from '../../tools/constants';
+import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION } from '../../tools/constants';
 
-function Player() {
+export default function Player() {
   const { activities } = useContext(StoreContext);
 
   const renderPlayer = () => {
     return (
       <RemotionPlayer
         component={MyActivities}
-        durationInFrames={Math.round((activities.length * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)}
+        durationInFrames={
+          INTRO_FRAME_DURATION + Math.round((activities.length * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)
+        }
         compositionWidth={1280}
         compositionHeight={720}
         fps={30}
@@ -23,5 +25,3 @@ function Player() {
 
   return <div className="player">{renderPlayer()}</div>;
 }
-
-export default Player;

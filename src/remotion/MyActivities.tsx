@@ -1,8 +1,9 @@
-import { Series } from 'remotion';
+import { Series, Sequence } from 'remotion';
 import React, { useCallback, useContext } from 'react';
+import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION } from '../tools/constants';
 import Activity from '../components/Activity';
 import { StoreContext } from '../contexts/StoreContext';
-import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND } from '../tools/constants';
+import Intro from '../components/Intro';
 
 export const MyActivities: React.FC = () => {
   const store = useContext(StoreContext);
@@ -18,7 +19,11 @@ export const MyActivities: React.FC = () => {
     );
   };
   const renderActivities = useCallback(() => {
-    return <Series>{store?.activities.map(renderActivity)}</Series>;
+    return (
+      <Sequence from={INTRO_FRAME_DURATION}>
+        <Series>{store?.activities.map(renderActivity)}</Series>
+      </Sequence>
+    );
   }, [store?.activities]);
 
   return (
@@ -30,6 +35,9 @@ export const MyActivities: React.FC = () => {
         backgroundColor: 'white',
       }}
     >
+      <Sequence from={0} durationInFrames={30}>
+        <Intro athlete={store.athlete} />
+      </Sequence>
       {store?.activities.length ? renderActivities() : null}
     </div>
   );
