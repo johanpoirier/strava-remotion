@@ -7,5 +7,9 @@ export function formatDuration(durationInSeconds: number): string {
   if (durationInHours === 0) {
     return `${durationInMinutes} min`;
   }
+  const durationLeftInMinutes = durationInMinutes % ONE_HOUR_IN_MINUTES;
+  if (durationLeftInMinutes === 0) {
+    return `${durationInHours} h`;
+  }
   return `${durationInHours}h${durationInMinutes % ONE_HOUR_IN_MINUTES}m`;
 }

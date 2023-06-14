@@ -30,6 +30,7 @@ export default function Activity({ data }: { data: MyActivity }) {
         <ActivityDataDetail value={Math.round(data.distance / 1000)} type={ActivityDetailType.Distance} />
         <ActivityDataDetail value={formatDuration(data.duration)} type={ActivityDetailType.Duration} />
         <ActivityDataDetail value={Math.round(data.elevationGain)} type={ActivityDetailType.Elevation} />
+        {data.photo && <Img src={data.photo} alt="" className="activity-data-photo" />}
       </div>
       <ActivityMap id={data.id} pointsPerFrame={pointsPerFrame} coordinates={data.map} />
       <Img className="activity-logo" src={staticFile(`assets/${getActivityLogo(data.type)}`)} alt={data.type} />

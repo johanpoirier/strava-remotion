@@ -27,3 +27,4 @@ out/
 
 api/data/*.db
 *.mock.ts
+server/*.json

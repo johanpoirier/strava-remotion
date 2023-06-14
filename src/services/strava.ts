@@ -2,7 +2,7 @@ export function getAuthUrl(): string {
   const redirectUri: string = process.env.REACT_APP_REDIRECT_URI ?? 'http://localhost:3002/login';
   return `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${encodeURI(
     redirectUri,
-  )}&response_type=code&scope=read,activity:read`;
+  )}&response_type=code&scope=read,activity:read_all`;
 }
 
 export async function fetchAccessTokens(code: string): Promise<object> {
