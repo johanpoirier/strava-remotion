@@ -1,8 +1,8 @@
 import { Audio, Series, Sequence, staticFile, interpolate } from 'remotion';
 import React, { useCallback, useContext, useMemo } from 'react';
 import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION, ONE_WEEK_IN_MS } from '../tools/constants';
-import { StoreContext } from '../contexts/StoreContext';
 import { formatTimeDate } from '../tools/format-date';
+import { StoreContext } from '../contexts/StoreContext';
 import Activity from '../components/Activity';
 import Intro from '../components/Intro';
 

@@ -4,12 +4,7 @@ import * as Cabin from '@remotion/google-fonts/Cabin';
 import './style.css';
 import { getDataForStore } from '../services/data';
 import { StoreContext } from '../contexts/StoreContext';
-import {
-  ACTIVITY_COUNT_TO_RENDER,
-  ACTIVITY_VIDEO_DURATION,
-  FRAME_PER_SECOND,
-  INTRO_FRAME_DURATION,
-} from '../tools/constants';
+import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION } from '../tools/constants';
 import { MyActivities } from './MyActivities';
 import { Store } from '../models/Store';
 
@@ -17,7 +12,7 @@ Cabin.loadFont('normal', { weights: ['400', '700'] });
 Cabin.loadFont('italic', { weights: ['400'] });
 
 // @ts-ignore
-const { token, activityCount = ACTIVITY_COUNT_TO_RENDER } = getInputProps();
+const { token } = getInputProps();
 
 export const RemotionRoot: React.FC = () => {
   const [handle] = useState(() => delayRender());

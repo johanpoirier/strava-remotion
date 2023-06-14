@@ -1,8 +1,8 @@
 import React, { useCallback, useContext } from 'react';
-import './style.css';
 import { addRenderRequest } from '../../services/api';
 import { getAccessToken } from '../../services/auth';
 import { StoreContext } from '../../contexts/StoreContext';
+import './request-form.css';
 
 export default function RequestForm({ onRequest }: { onRequest: () => void }) {
   const { athlete } = useContext(StoreContext);

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import './style.css';
 import { StoreContext } from '../../contexts/StoreContext';
+import './welcome.css';
 
 export default function RenderList() {
   const { athlete } = useContext(StoreContext);
