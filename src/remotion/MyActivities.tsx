@@ -1,13 +1,16 @@
-import { Series, Sequence } from 'remotion';
-import React, { useCallback, useContext } from 'react';
+import { Audio, Series, Sequence, staticFile, interpolate } from 'remotion';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION, ONE_WEEK_IN_MS } from '../tools/constants';
-import Activity from '../components/Activity';
 import { StoreContext } from '../contexts/StoreContext';
-import Intro from '../components/Intro';
 import { formatTimeDate } from '../tools/format-date';
+import Activity from '../components/Activity';
+import Intro from '../components/Intro';
 
 export const MyActivities: React.FC = () => {
   const store = useContext(StoreContext);
+  const activitiesTotalDurationInFrames = useMemo<number>(() => {
+    return store.activities.length * Math.round((FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000);
+  }, [store.activities]);
 
   const renderActivity = (activity: any, index: number) => {
     return (
@@ -36,6 +39,22 @@ export const MyActivities: React.FC = () => {
         backgroundColor: 'white',
       }}
     >
+      <Audio
+        src={staticFile('music.mp3')}
+        volume={(frame: number) =>
+          interpolate(
+            frame,
+            [
+              0,
+              INTRO_FRAME_DURATION,
+              activitiesTotalDurationInFrames,
+              activitiesTotalDurationInFrames + INTRO_FRAME_DURATION,
+            ],
+            [0, 1, 1, 0],
+            { extrapolateLeft: 'clamp' },
+          )
+        }
+      />
       <Sequence from={0} durationInFrames={30}>
         <Intro
           athlete={store.athlete}
