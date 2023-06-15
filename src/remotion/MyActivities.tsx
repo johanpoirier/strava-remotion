@@ -74,7 +74,7 @@ export const MyActivities: React.FC = () => {
         from={INTRO_DURATION_IN_FRAMES + activitiesTotalDurationInFrames}
         durationInFrames={OUTRO_DURATION_IN_FRAMES}
       >
-        <Outro athlete={store.athlete} />
+        <Outro athlete={store.athlete} activities={store.activities} />
       </Sequence>
     </div>
   );

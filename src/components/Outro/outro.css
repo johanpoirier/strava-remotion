@@ -9,3 +9,24 @@
     justify-content: space-evenly;
     width: 100%;
 }
+
+.outro ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.outro-activity-type {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5em;
+}
+
+.outro-activity-type img {
+    filter: invert(1);
+    max-height: 1.6em;
+}

@@ -1,17 +1,28 @@
-import React from 'react';
-import { Img, interpolate, useCurrentFrame } from 'remotion';
+import React, { useMemo } from 'react';
 import './outro.css';
+import { onlyUniqueFilter } from '../../tools/only-uniq-filter';
 import { Athlete } from '../../models/Athlete';
-import { OUTRO_DURATION_IN_FRAMES } from '../../tools/constants';
+import { MyActivity } from '../../models/MyActivity';
+import { displayTotalsByType } from '../../tools/display-totals-by-type';
+import { formatDuration } from '../../tools/format-duration';
 
-export default function Outro({ athlete }: { athlete: Athlete }) {
-  const frame = useCurrentFrame();
-  const profileOpacity = interpolate(frame, [0, Math.round(OUTRO_DURATION_IN_FRAMES * 0.9)], [0, 1]);
+export default function Outro({ activities }: { athlete: Athlete; activities: MyActivity[] }) {
+  const activityTypes = useMemo(() => {
+    return activities.map((activity: MyActivity) => activity.type).filter(onlyUniqueFilter);
+  }, [activities]);
+
+  const totalDuration = activities.reduce((duration: number, currentActivity: MyActivity) => {
+    return duration + currentActivity.duration;
+  }, 0);
+
+  function displayDataByTypes(types: string[]) {
+    return <ul>{types.map((type: string) => displayTotalsByType(type, activities))}</ul>;
+  }
 
   return (
     <section className="outro">
-      <p className="intro-title">Thanks.</p>
-      <Img src={athlete.profile} alt="" className="intro-profile" style={{ opacity: profileOpacity }} />
+      <span>This past 7 days: {formatDuration(totalDuration)}</span>
+      {displayDataByTypes(activityTypes)}
     </section>
   );
 }
