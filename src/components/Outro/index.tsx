@@ -5,8 +5,11 @@ import { Athlete } from '../../models/Athlete';
 import { MyActivity } from '../../models/MyActivity';
 import { displayTotalsByType } from '../../tools/display-totals-by-type';
 import { formatDuration } from '../../tools/format-duration';
+import { useTranslation } from 'react-i18next';
 
 export default function Outro({ activities }: { athlete: Athlete; activities: MyActivity[] }) {
+  const { t } = useTranslation();
+
   const activityTypes = useMemo(() => {
     return activities.map((activity: MyActivity) => activity.type).filter(onlyUniqueFilter);
   }, [activities]);
@@ -21,7 +24,9 @@ export default function Outro({ activities }: { athlete: Athlete; activities: My
 
   return (
     <section className="outro">
-      <span>This past 7 days: {formatDuration(totalDuration)}</span>
+      <span>
+        {t('outro.last-period')} {formatDuration(totalDuration)}
+      </span>
       {displayDataByTypes(activityTypes)}
     </section>
   );
