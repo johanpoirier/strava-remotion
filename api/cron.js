@@ -27,12 +27,13 @@ const renderJob = async function () {
     return;
   }
 
-  console.log(`Render ${render.id} with token ${render.token}`);
+  console.log(`Render ${render.id} with token ${render.token} (${render.lang})`);
   await markRenderAsInProgress(render.id);
 
   const renderProps = {
     token: render.token,
     userId: render.userId,
+    lang: render.lang,
   };
 
   const cmd = `cd .. && npm run render -- InMotion ${outputDir}/render-${render.id}.mp4 --props='${JSON.stringify(

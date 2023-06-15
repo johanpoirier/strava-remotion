@@ -15,6 +15,7 @@ function setup() {
       userId VARCHAR(10) NOT NULL,
       token VARCHAR(250) NOT NULL,
       createdAt INTEGER(4) NOT NULL default (strftime('%s','now')),
+      lang VARCHAR(2) NOT NULL default "en",
       status INTEGER(1) DEFAULT 0
     );`;
 
@@ -25,9 +26,9 @@ function setup() {
   });
 }
 
-async function addRender({ userId, token }) {
+async function addRender({ userId, token, lang = 'fr' }) {
   return new Promise((resolve, reject) => {
-    const rendersAdd = `INSERT INTO renders (userId, token) VALUES ('${userId}', '${token}');`;
+    const rendersAdd = `INSERT INTO renders (userId, token, lang) VALUES ('${userId}', '${token}', '${lang}');`;
     db.run(rendersAdd, function (err, result) {
       if (err) {
         console.error(err.message);

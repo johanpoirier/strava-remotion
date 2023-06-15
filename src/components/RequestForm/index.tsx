@@ -27,6 +27,7 @@ export default function RequestForm({ onRequest }: { onRequest: () => void }) {
       addRenderRequest({
         userId: athlete.id,
         token,
+        lang: window.navigator.language,
       })
         .then(onRequest)
         .catch(console.error);

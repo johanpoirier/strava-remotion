@@ -13,12 +13,13 @@ import {
 } from '../tools/constants';
 import { MyActivities } from './MyActivities';
 import { Store } from '../models/Store';
+import i18n from '../i18n';
 
 Cabin.loadFont('normal', { weights: ['400', '700'] });
 Cabin.loadFont('italic', { weights: ['400'] });
 
 // @ts-ignore
-const { token } = getInputProps();
+const { token, lang } = getInputProps();
 
 export const RemotionRoot: React.FC = () => {
   const [handle] = useState(() => delayRender());
@@ -29,14 +30,16 @@ export const RemotionRoot: React.FC = () => {
   }, [store?.activities]);
 
   useEffect(() => {
-    getDataForStore(token)
-      .then((store: Store) => {
-        setStore(store);
-        continueRender(handle);
-      })
-      .catch((error: any) => {
-        console.log('Fetching error', error);
-      });
+    i18n.changeLanguage(lang).then(() =>
+      getDataForStore(token)
+        .then((store: Store) => {
+          setStore(store);
+          continueRender(handle);
+        })
+        .catch((error: any) => {
+          console.log('Fetching error', error);
+        }),
+    );
   }, [handle]);
 
   if (!store) {

@@ -32,7 +32,7 @@ const resources = {
       'preview-zone.show': 'Afficher l’aperçu',
       'request-form.request-render': 'Générer la vidéo',
       'render-list.created': 'créée',
-      'render-list.rendering': 'en cours de création',
+      'render-list.rendering': 'en cours',
       'render-list.ready': 'prête',
       'render-list.error': 'en erreur',
       'render-list.download-video': 'Télécharger la vidéo {{id}} du {{date}}',
