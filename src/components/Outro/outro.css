@@ -1,0 +1,11 @@
+.outro {
+    align-items: center;
+    background-color: #000000;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-size: 5rem;
+    height: 100%;
+    justify-content: space-evenly;
+    width: 100%;
+}

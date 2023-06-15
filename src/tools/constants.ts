@@ -1,6 +1,14 @@
+export const ONE_SECOND_IN_MS = 1000;
+export const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * ONE_SECOND_IN_MS;
 export const FRAME_PER_SECOND = 30;
-export const INTRO_FRAME_DURATION = 30;
-export const ACTIVITY_VIDEO_DURATION = 3200;
+export const INTRO_DURATION = 2000;
+export const INTRO_DURATION_IN_FRAMES = Math.round((INTRO_DURATION * FRAME_PER_SECOND) / ONE_SECOND_IN_MS);
+export const OUTRO_DURATION = 1000;
+export const OUTRO_DURATION_IN_FRAMES = Math.round((OUTRO_DURATION * FRAME_PER_SECOND) / ONE_SECOND_IN_MS);
+export const ACTIVITY_VIDEO_DURATION = 4000;
+export const ACTIVITY_VIDEO_DURATION_IN_FRAMES = Math.round(
+  (ACTIVITY_VIDEO_DURATION * FRAME_PER_SECOND) / ONE_SECOND_IN_MS,
+);
 export const DISPLAY_FRAME_RATIO = 0.88;
 export const ACTIVITY_MAP_LOAD_TIMEOUT = 250;
 export const MIN_ELEVATION_GAIN = 50;
@@ -8,4 +16,3 @@ export const ACTIVITY_COUNT_TO_RENDER = 7;
 export const ACCESS_TOKEN_KEY = 'atkn';
 export const REFRESH_TOKEN_KEY = 'rtkn';
 export const TOKEN_EXPIRATION_KEY = 'texp';
-export const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;

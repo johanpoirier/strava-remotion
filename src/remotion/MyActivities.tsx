@@ -1,30 +1,37 @@
 import { Audio, Series, Sequence, staticFile, interpolate } from 'remotion';
 import React, { useCallback, useContext, useMemo } from 'react';
-import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION, ONE_WEEK_IN_MS } from '../tools/constants';
+import {
+  ACTIVITY_VIDEO_DURATION,
+  ACTIVITY_VIDEO_DURATION_IN_FRAMES,
+  FRAME_PER_SECOND,
+  INTRO_DURATION,
+  INTRO_DURATION_IN_FRAMES,
+  ONE_WEEK_IN_MS,
+  OUTRO_DURATION_IN_FRAMES,
+} from '../tools/constants';
 import { formatTimeDate } from '../tools/format-date';
 import { StoreContext } from '../contexts/StoreContext';
 import Activity from '../components/Activity';
 import Intro from '../components/Intro';
+import Outro from '../components/Outro';
 
 export const MyActivities: React.FC = () => {
   const store = useContext(StoreContext);
+
   const activitiesTotalDurationInFrames = useMemo<number>(() => {
-    return store.activities.length * Math.round((FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000);
+    return store.activities.length * ACTIVITY_VIDEO_DURATION_IN_FRAMES;
   }, [store.activities]);
 
   const renderActivity = (activity: any, index: number) => {
     return (
-      <Series.Sequence
-        durationInFrames={Math.round((FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)}
-        key={`seq-${index}`}
-      >
+      <Series.Sequence durationInFrames={ACTIVITY_VIDEO_DURATION_IN_FRAMES} key={`seq-${index}`}>
         <Activity data={activity} />
       </Series.Sequence>
     );
   };
   const renderActivities = useCallback(() => {
     return (
-      <Sequence from={INTRO_FRAME_DURATION}>
+      <Sequence from={INTRO_DURATION_IN_FRAMES}>
         <Series>{store?.activities.map(renderActivity)}</Series>
       </Sequence>
     );
@@ -46,16 +53,16 @@ export const MyActivities: React.FC = () => {
             frame,
             [
               0,
-              INTRO_FRAME_DURATION,
+              INTRO_DURATION_IN_FRAMES,
               activitiesTotalDurationInFrames,
-              activitiesTotalDurationInFrames + INTRO_FRAME_DURATION,
+              activitiesTotalDurationInFrames + INTRO_DURATION_IN_FRAMES,
             ],
             [0, 1, 1, 0],
             { extrapolateLeft: 'clamp' },
           )
         }
       />
-      <Sequence from={0} durationInFrames={30}>
+      <Sequence from={0} durationInFrames={INTRO_DURATION_IN_FRAMES}>
         <Intro
           athlete={store.athlete}
           from={formatTimeDate(Date.now() - ONE_WEEK_IN_MS)}
@@ -63,6 +70,12 @@ export const MyActivities: React.FC = () => {
         />
       </Sequence>
       {store?.activities.length ? renderActivities() : null}
+      <Sequence
+        from={INTRO_DURATION_IN_FRAMES + activitiesTotalDurationInFrames}
+        durationInFrames={OUTRO_DURATION_IN_FRAMES}
+      >
+        <Outro athlete={store.athlete} />
+      </Sequence>
     </div>
   );
 };

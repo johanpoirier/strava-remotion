@@ -2,12 +2,12 @@ import React from 'react';
 import { Img, interpolate, useCurrentFrame } from 'remotion';
 import './intro.css';
 import { Athlete } from '../../models/Athlete';
-import { INTRO_FRAME_DURATION } from '../../tools/constants';
+import { INTRO_DURATION_IN_FRAMES } from '../../tools/constants';
 
 export default function Intro({ athlete, from, to }: { athlete: Athlete; from: string; to: string }) {
   const frame = useCurrentFrame();
-  const titleOpacity = interpolate(frame, [0, Math.round(INTRO_FRAME_DURATION / 2)], [0, 1]);
-  const profileOpacity = interpolate(frame, [0, Math.round(INTRO_FRAME_DURATION * 0.9)], [0, 1]);
+  const titleOpacity = interpolate(frame, [0, Math.round(INTRO_DURATION_IN_FRAMES / 2)], [0, 1]);
+  const profileOpacity = interpolate(frame, [0, Math.round(INTRO_DURATION_IN_FRAMES * 0.9)], [0, 1]);
 
   return (
     <section className="intro">

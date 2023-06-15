@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Composition, continueRender, delayRender, getInputProps } from 'remotion';
 import * as Cabin from '@remotion/google-fonts/Cabin';
 import './style.css';
 import { getDataForStore } from '../services/data';
 import { StoreContext } from '../contexts/StoreContext';
-import { ACTIVITY_VIDEO_DURATION, FRAME_PER_SECOND, INTRO_FRAME_DURATION } from '../tools/constants';
+import {
+  FRAME_PER_SECOND,
+  ACTIVITY_VIDEO_DURATION,
+  INTRO_DURATION,
+  OUTRO_DURATION,
+  ONE_SECOND_IN_MS,
+} from '../tools/constants';
 import { MyActivities } from './MyActivities';
 import { Store } from '../models/Store';
 
@@ -17,6 +23,10 @@ const { token } = getInputProps();
 export const RemotionRoot: React.FC = () => {
   const [handle] = useState(() => delayRender());
   const [store, setStore] = useState<Store>();
+
+  const videoTotalDuration = useMemo<number>(() => {
+    return INTRO_DURATION + (store?.activities.length ?? 1) * ACTIVITY_VIDEO_DURATION + OUTRO_DURATION;
+  }, [store?.activities]);
 
   useEffect(() => {
     getDataForStore(token)
@@ -38,10 +48,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="InMotion"
         component={MyActivities}
-        durationInFrames={
-          INTRO_FRAME_DURATION +
-          Math.round(((store?.activities.length ?? 1) * FRAME_PER_SECOND * ACTIVITY_VIDEO_DURATION) / 1000)
-        }
+        durationInFrames={Math.round((videoTotalDuration * FRAME_PER_SECOND) / ONE_SECOND_IN_MS)}
         fps={FRAME_PER_SECOND}
         width={1280}
         height={720}
