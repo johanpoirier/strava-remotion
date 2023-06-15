@@ -4,9 +4,11 @@ import { StoreContext } from '../../contexts/StoreContext';
 import Player from '../Player';
 import RequestForm from '../RequestForm';
 import RenderList from '../RenderList';
+import { useTranslation } from 'react-i18next';
 
 export default function PreviewZone() {
   const { activities } = useContext(StoreContext);
+  const { t } = useTranslation();
 
   const [shouldDisplayPreview, setShouldDisplayPreview] = useState(false);
 
@@ -23,7 +25,7 @@ export default function PreviewZone() {
     <section className="preview-zone">
       <div className="preview-zone-actions">
         <button type="button" onClick={() => setShouldDisplayPreview(true)}>
-          Show preview
+          {t('preview-zone.show')}
         </button>
         <RequestForm onRequest={displayRenderList} />
       </div>

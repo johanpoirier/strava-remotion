@@ -3,10 +3,12 @@ import './render-list.css';
 import { fetchUserRenderList } from '../../services/api';
 import { StoreContext } from '../../contexts/StoreContext';
 import { formatTimeDate } from '../../tools/format-date';
+import { useTranslation } from 'react-i18next';
 
 export default function RenderList() {
   const [renderList, setRenderList] = useState<any[]>([]);
   const { athlete } = useContext(StoreContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!athlete) {
@@ -23,13 +25,13 @@ export default function RenderList() {
   const getStatus = (statusCode: number): string => {
     switch (statusCode) {
       case 0:
-        return 'created';
+        return t('render-list.created');
       case 1:
-        return 'rendering';
+        return t('render-list.rendering');
       case 2:
-        return 'ready';
+        return t('render-list.ready');
       case 3:
-        return 'in error';
+        return t('render-list.error');
       default:
         return '?';
     }
@@ -40,14 +42,18 @@ export default function RenderList() {
       return (
         <li key={`render-${render.id}`}>
           <a href={`/out/render-${render.id}.mp4`}>
-            Download video #{render.id} from {formatTimeDate(render.createdAt * 1000)}
+            {t('render-list.download-video', { id: render.id, date: formatTimeDate(render.createdAt * 1000) })}
           </a>
         </li>
       );
     }
     return (
       <li key={`render-${render.id}`}>
-        Video request #{render.id} from {formatTimeDate(render.createdAt * 1000)} is {getStatus(render.status)}
+        {t('render-list.video-request', {
+          id: render.id,
+          date: formatTimeDate(render.createdAt * 1000),
+          status: getStatus(render.status),
+        })}
       </li>
     );
   };

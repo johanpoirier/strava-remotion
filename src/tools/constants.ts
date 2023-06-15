@@ -12,7 +12,6 @@ export const ACTIVITY_VIDEO_DURATION_IN_FRAMES = Math.round(
 export const DISPLAY_FRAME_RATIO = 0.88;
 export const ACTIVITY_MAP_LOAD_TIMEOUT = 250;
 export const MIN_ELEVATION_GAIN = 50;
-export const ACTIVITY_COUNT_TO_RENDER = 7;
 export const ACCESS_TOKEN_KEY = 'atkn';
 export const REFRESH_TOKEN_KEY = 'rtkn';
 export const TOKEN_EXPIRATION_KEY = 'texp';

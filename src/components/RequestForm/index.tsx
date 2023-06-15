@@ -3,9 +3,11 @@ import { addRenderRequest } from '../../services/api';
 import { getAccessToken } from '../../services/auth';
 import { StoreContext } from '../../contexts/StoreContext';
 import './request-form.css';
+import { useTranslation } from 'react-i18next';
 
 export default function RequestForm({ onRequest }: { onRequest: () => void }) {
   const { athlete } = useContext(StoreContext);
+  const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     (e: any) => {
@@ -34,7 +36,7 @@ export default function RequestForm({ onRequest }: { onRequest: () => void }) {
 
   return (
     <form method="post" onSubmit={handleSubmit} className="request-form">
-      <button type="submit">Request render</button>
+      <button type="submit">{t('request-form.request-render')}</button>
     </form>
   );
 }
