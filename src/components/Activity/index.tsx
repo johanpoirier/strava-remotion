@@ -26,6 +26,7 @@ export default function Activity({ data }: { data: MyActivity }) {
   return (
     <section className="activity">
       <ActivityHeader data={data} />
+      <Img className="activity-logo" src={staticFile(`assets/${getActivityLogo(data.type)}`)} alt={data.type} />
       <div className="activity-data" style={{ transform: `scale(${scale})` }}>
         <ActivityDataDetail value={Math.round(data.distance / 1000)} type={ActivityDetailType.Distance} />
         <ActivityDataDetail value={formatDuration(data.duration)} type={ActivityDetailType.Duration} />
@@ -33,7 +34,6 @@ export default function Activity({ data }: { data: MyActivity }) {
         {data.photo && <Img src={data.photo} alt="" className="activity-data-photo" />}
       </div>
       <ActivityMap id={data.id} pointsPerFrame={pointsPerFrame} coordinates={data.map} />
-      <Img className="activity-logo" src={staticFile(`assets/${getActivityLogo(data.type)}`)} alt={data.type} />
     </section>
   );
 }
