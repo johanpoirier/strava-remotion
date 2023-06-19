@@ -36,7 +36,7 @@ const renderJob = async function () {
     lang: render.lang,
   };
 
-  const cmd = `cd .. && npm run render -- InMotion ${outputDir}/render-${render.id}.mp4 --props='${JSON.stringify(
+  const cmd = `cd .. && npm run render -- StravaInMotion ${outputDir}/render-${render.id}.mp4 --props='${JSON.stringify(
     renderProps,
   )}'`;
   exec(cmd, (error, stdout, stderr) => {

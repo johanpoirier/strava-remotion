@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import './style.css';
 import { Player as RemotionPlayer } from '@remotion/player';
-import { MyActivities } from '../../remotion/MyActivities';
+import { StravaInMotion } from '../../remotion/StravaInMotion';
 import { StoreContext } from '../../contexts/StoreContext';
 import {
   FRAME_PER_SECOND,
@@ -23,7 +23,7 @@ export default function Player() {
   const renderPlayer = () => {
     return (
       <RemotionPlayer
-        component={MyActivities}
+        component={StravaInMotion}
         durationInFrames={Math.round((videoTotalDuration * FRAME_PER_SECOND) / ONE_SECOND_IN_MS)}
         compositionWidth={1280}
         compositionHeight={720}

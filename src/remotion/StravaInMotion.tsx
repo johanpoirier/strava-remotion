@@ -1,10 +1,7 @@
 import { Audio, Series, Sequence, staticFile, interpolate } from 'remotion';
 import React, { useCallback, useContext, useMemo } from 'react';
 import {
-  ACTIVITY_VIDEO_DURATION,
   ACTIVITY_VIDEO_DURATION_IN_FRAMES,
-  FRAME_PER_SECOND,
-  INTRO_DURATION,
   INTRO_DURATION_IN_FRAMES,
   ONE_WEEK_IN_MS,
   OUTRO_DURATION_IN_FRAMES,
@@ -15,7 +12,7 @@ import Activity from '../components/Activity';
 import Intro from '../components/Intro';
 import Outro from '../components/Outro';
 
-export const MyActivities: React.FC = () => {
+export const StravaInMotion: React.FC = () => {
   const store = useContext(StoreContext);
 
   const activitiesTotalDurationInFrames = useMemo<number>(() => {

@@ -11,7 +11,7 @@ import {
   OUTRO_DURATION,
   ONE_SECOND_IN_MS,
 } from '../tools/constants';
-import { MyActivities } from './MyActivities';
+import { StravaInMotion } from './StravaInMotion';
 import { Store } from '../models/Store';
 import i18n from '../i18n';
 
@@ -49,8 +49,8 @@ export const RemotionRoot: React.FC = () => {
   return (
     <StoreContext.Provider value={store}>
       <Composition
-        id="InMotion"
-        component={MyActivities}
+        id="StravaInMotion"
+        component={StravaInMotion}
         durationInFrames={Math.round((videoTotalDuration * FRAME_PER_SECOND) / ONE_SECOND_IN_MS)}
         fps={FRAME_PER_SECOND}
         width={1280}
