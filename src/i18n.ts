@@ -6,8 +6,9 @@ const resources = {
   en: {
     translation: {
       'welcome.title': 'Hello {{firstname}}!',
-      'activity-list.title': 'Welcome to Strava in motion!',
+      'activity-list.title': 'Welcome to InMotion!',
       'activity-list.explanation': 'We will generate a video of your activities from the past 7 days:',
+      'activity-list-item.view-on-strava': 'View on Strava',
       'preview-zone.show': 'Show preview',
       'request-form.request-render': 'Request render',
       'render-list.created': 'created',
@@ -27,8 +28,9 @@ const resources = {
   fr: {
     translation: {
       'welcome.title': 'Bonjour {{firstname}} !',
-      'activity-list.title': 'Bienvenue sur Strava in motion !',
+      'activity-list.title': 'Bienvenue sur InMotion !',
       'activity-list.explanation': 'Nous allons produire une vidéo de vos activités des 7 derniers jours :',
+      'activity-list-item.view-on-strava': 'Voir sur Strava',
       'preview-zone.show': 'Afficher l’aperçu',
       'request-form.request-render': 'Générer la vidéo',
       'render-list.created': 'créée',

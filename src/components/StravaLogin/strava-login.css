@@ -2,17 +2,16 @@
     align-items: center;
     background-color: #fc5200;
     display: flex;
+    flex-direction: column;
     height: 100vh;
     justify-content: center;
     width: 100%;
 }
 
-.strava-login-button {
-    background-color: white;
-    border-radius: 0.5em;
-    color: #fc5200;
-    font-size: 4vw;
-    padding: 0.2em 0.8em;
-    text-decoration: none;
-    text-transform: uppercase;
+.strava-login-button img {
+    width: 300px;
+}
+
+.inmotion-logo {
+    margin-bottom: 6vh;
 }

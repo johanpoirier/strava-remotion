@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchAccessTokens, getAuthUrl } from '../../services/strava';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, TOKEN_EXPIRATION_KEY } from '../../tools/constants';
 import './strava-login.css';
+import { Img, staticFile } from 'remotion';
 
 export default function StravaLogin({ code }: { code?: string }) {
   const navigate = useNavigate();
@@ -35,12 +36,17 @@ export default function StravaLogin({ code }: { code?: string }) {
     if (!accessToken) {
       return (
         <a className="strava-login-button" href={getAuthUrl()}>
-          Login to Strava
+          <Img src={staticFile('assets/btn-strava-connectwith-light.svg')} alt="" />
         </a>
       );
     }
     return null;
   };
 
-  return <main className="strava-login">{renderLoginLink()}</main>;
+  return (
+    <main className="strava-login">
+      <Img src={staticFile('logo192.png')} alt="Login with Strava" className="inmotion-logo" />
+      {renderLoginLink()}
+    </main>
+  );
 }
