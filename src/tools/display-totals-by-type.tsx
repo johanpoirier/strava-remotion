@@ -62,6 +62,16 @@ function displaySwimTotals(activities: MyActivity[]) {
   );
 }
 
+function displaySupTotals(activities: MyActivity[]) {
+  return (
+    <li className="outro-activity-type">
+      <Img src={staticFile(`assets/${getActivityLogo('StandUpPaddling')}`)} alt="" />
+      <span>{Math.round(getTotalDistance(activities) / 1000)}km</span>
+      <span>{formatDuration(getTotalDuration(activities))}</span>
+    </li>
+  );
+}
+
 function displayDefaultTotals(activities: MyActivity[]) {
   const totalDistance = getTotalDistance(activities);
   return (
@@ -84,6 +94,8 @@ export function displayTotalsByType(type: string, activities: MyActivity[]) {
       return displayHikeTotals(activitiesOfType);
     case 'Swim':
       return displaySwimTotals(activitiesOfType);
+    case 'StandUpPaddling':
+      return displaySupTotals(activitiesOfType);
     default:
       return displayDefaultTotals(activitiesOfType);
   }
