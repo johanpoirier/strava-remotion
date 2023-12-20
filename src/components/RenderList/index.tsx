@@ -4,9 +4,10 @@ import { fetchUserRenderList } from '../../services/api';
 import { StoreContext } from '../../contexts/StoreContext';
 import { formatTimeDate } from '../../tools/format-date';
 import { useTranslation } from 'react-i18next';
+import { Render } from '../../models/Render';
 
 export default function RenderList() {
-  const [renderList, setRenderList] = useState<any[]>([]);
+  const [renderList, setRenderList] = useState<Render[]>([]);
   const { athlete } = useContext(StoreContext);
   const { t } = useTranslation();
 
@@ -37,7 +38,7 @@ export default function RenderList() {
     }
   };
 
-  const displayRender = (render: any) => {
+  const displayRender = (render: Render) => {
     if (render.status === 2) {
       return (
         <li key={`render-${render.id}`}>

@@ -1,3 +1,5 @@
+import { Render } from '../models/Render';
+
 export async function addRenderRequest({
   userId,
   token,
@@ -22,7 +24,7 @@ export async function addRenderRequest({
 
   return response.json();
 }
-export async function fetchUserRenderList(userId: string) {
+export async function fetchUserRenderList(userId: string): Promise<Render[]> {
   const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/${userId}/renders`);
 
   if (!response.ok) {

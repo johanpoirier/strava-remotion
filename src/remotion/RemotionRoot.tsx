@@ -30,8 +30,8 @@ export const RemotionRoot: React.FC = () => {
   }, [store?.activities]);
 
   useEffect(() => {
-    i18n.changeLanguage(lang).then(() =>
-      getDataForStore(token)
+    i18n.changeLanguage(lang as string).then(() =>
+      getDataForStore(token as string)
         .then((store: Store) => {
           setStore(store);
           continueRender(handle);

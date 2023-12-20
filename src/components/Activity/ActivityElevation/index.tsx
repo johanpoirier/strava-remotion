@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCurrentFrame } from 'remotion';
 import {
   DISPLAY_FRAME_RATIO,
@@ -23,7 +23,7 @@ export default function ActivityElevation({
 }) {
   const elevationId: string = useMemo(() => `elevation-${id}`, [id]);
   const frame = useCurrentFrame();
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const timeRatio: number = useMemo(() => {
     return (times[times.length - 1] - times[0]) / CANVAS_WIDTH;
@@ -56,8 +56,12 @@ export default function ActivityElevation({
   );
 
   const drawLine = useCallback(
-    (ref: any, xData: number[], yData: number[]) => {
-      const canvasContext = ref.current.getContext('2d');
+    (ref: RefObject<HTMLCanvasElement>, xData: number[], yData: number[]) => {
+      const canvasContext = ref.current?.getContext('2d');
+      if (!canvasContext) {
+        return;
+      }
+
       canvasContext.fillStyle = FILL_COLOR;
       canvasContext.beginPath();
 

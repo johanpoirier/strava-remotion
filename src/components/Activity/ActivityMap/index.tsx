@@ -8,23 +8,26 @@ import { ACTIVITY_MAP_LOAD_TIMEOUT } from '../../../tools/constants';
 export default function ActivityMap({
   id,
   pointsPerFrame,
-  coordinates,
+  coordinateList,
 }: {
   id: string;
   pointsPerFrame: number;
-  coordinates: any[];
+  coordinateList: number[][];
 }) {
   const frame = useCurrentFrame();
 
-  const [map, setMap] = useState<any>();
+  const [map, setMap] = useState<unknown>();
   const [handle] = useState(() => delayRender(`[ActivityMap] Generate map ${id}`));
 
   const generateActivityMap = useCallback(() => {
-    const leafletMap: any = generateMap(`map-${id}`, coordinates);
+    if (coordinateList.length === 0) {
+      return;
+    }
+    const leafletMap: unknown = generateMap(`map-${id}`, coordinateList);
     setTimeout(() => continueRender(handle), ACTIVITY_MAP_LOAD_TIMEOUT); // force timeout to map load complete
     setMap(leafletMap);
-    drawActivityMarker(leafletMap, coordinates[0]);
-  }, [coordinates, handle, id]);
+    drawActivityMarker(leafletMap, coordinateList[0]);
+  }, [coordinateList, handle, id]);
 
   useEffect(() => {
     generateActivityMap();
@@ -34,12 +37,12 @@ export default function ActivityMap({
     if (map && frame > 0) {
       const from = frame * pointsPerFrame;
       const to = (frame + 1) * pointsPerFrame + 1;
-      drawActivityRoute(map, coordinates.slice(from, to));
-      if (to > coordinates.length) {
-        drawActivityMarker(map, coordinates[coordinates.length - 1], 'end');
+      drawActivityRoute(map, coordinateList.slice(from, to));
+      if (to > coordinateList.length) {
+        drawActivityMarker(map, coordinateList[coordinateList.length - 1], 'end');
       }
     }
-  }, [map, coordinates, frame, pointsPerFrame]);
+  }, [map, coordinateList, frame, pointsPerFrame]);
 
   return <div id={`map-${id}`} className="activity-map"></div>;
 }

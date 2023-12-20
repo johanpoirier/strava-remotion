@@ -1,5 +1,5 @@
-import { Config } from 'remotion';
+import { Config } from '@remotion/cli/config';
 
 Config.setConcurrency(1);
-Config.setEntryPoint("./src/remotion/index.ts");
-Config.setQuality(100);
+Config.setEntryPoint('./src/remotion/index.ts');
+Config.setJpegQuality(100);

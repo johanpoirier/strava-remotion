@@ -17,10 +17,10 @@ const endIcon = L.icon({
   popupAnchor: [0, 0], // point from which the popup should open relative to the iconAnchor
 });
 
-export function decodeEncodedPolyline(encodedData: string): any[] {
+export function decodeEncodedPolyline(encodedData: string): unknown[] {
   return polyline.decode(encodedData);
 }
-export function generateMap(elementId: string, coordinates: any[], onRenderComplete?: any): any {
+export function generateMap(elementId: string, coordinates: number[][], onRenderComplete?: unknown): unknown {
   const canvasRenderer = L.canvas();
 
   const map = new L.map(elementId, {
@@ -42,11 +42,11 @@ export function generateMap(elementId: string, coordinates: any[], onRenderCompl
   return map;
 }
 
-export function drawActivityRoute(map: any, coordinates: any[]) {
+export function drawActivityRoute(map: unknown, coordinates: number[][]) {
   const polylineOptions = { color: 'red' };
   const polyline = L.polyline(coordinates, polylineOptions);
   polyline.addTo(map);
 }
-export function drawActivityMarker(map: any, coordinates: number[], iconType = 'start') {
+export function drawActivityMarker(map: unknown, coordinates: number[], iconType = 'start') {
   L.marker(coordinates, { icon: iconType === 'start' ? startIcon : endIcon }).addTo(map);
 }

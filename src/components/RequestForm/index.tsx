@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { FormEvent, useCallback, useContext } from 'react';
 import { addRenderRequest } from '../../services/api';
 import { getAccessToken } from '../../services/auth';
 import { StoreContext } from '../../contexts/StoreContext';
@@ -10,7 +10,7 @@ export default function RequestForm({ onRequest }: { onRequest: () => void }) {
   const { t } = useTranslation();
 
   const handleSubmit = useCallback(
-    (e: any) => {
+    (e: FormEvent<HTMLElement>) => {
       e.preventDefault();
 
       // const form = e.target;

@@ -2,7 +2,7 @@ import React from 'react';
 import './activity-header.css';
 import ActivityElevation from '../ActivityElevation';
 import { MyActivity } from '../../../models/MyActivity';
-import { formatDate, formatStringDate } from '../../../tools/format-date';
+import { formatStringDate } from '../../../tools/format-date';
 
 export default function ActivityHeader({ data }: { data: MyActivity }) {
   const { id, name, startDate, streams } = data;

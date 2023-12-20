@@ -31,9 +31,9 @@ export default function Activity({ data }: { data: MyActivity }) {
         <ActivityDataDetail value={Math.round(data.distance / 1000)} type={ActivityDetailType.Distance} />
         <ActivityDataDetail value={formatDuration(data.duration)} type={ActivityDetailType.Duration} />
         <ActivityDataDetail value={Math.round(data.elevationGain)} type={ActivityDetailType.Elevation} />
-        {data.photo && <Img src={data.photo} alt="" className="activity-data-photo" />}
+        {data.photo && <Img src={data.photo} alt="" className="activity-data-photo" placeholder={undefined} />}
       </div>
-      <ActivityMap id={data.id} pointsPerFrame={pointsPerFrame} coordinates={data.map} />
+      <ActivityMap id={data.id} pointsPerFrame={pointsPerFrame} coordinateList={data.map} />
     </section>
   );
 }
