@@ -4,7 +4,7 @@ import { buildAthlete } from '../models/Athlete';
 import { Store } from '../models/Store';
 import { ONE_WEEK_IN_MS } from '../tools/constants';
 
-export async function fetchActivities(accessToken: string, fromDate: Date = new Date(Date.now() - ONE_WEEK_IN_MS)) {
+export async function fetchActivities(accessToken: string, fromDate: Date = new Date(Date.now() - 3 * ONE_WEEK_IN_MS)) {
   const stravaActivities: any[] = await fetchAthleteActivitiesFromDate(accessToken, fromDate);
   const stravaActivitiyIds: string[] = stravaActivities.map((activity: any) => activity.id);
   const activityDetails: any[] = await Promise.all(

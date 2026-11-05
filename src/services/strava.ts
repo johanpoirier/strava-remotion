@@ -31,6 +31,10 @@ function sortActivitiesByDate(a: { start_date: string }, b: { start_date: string
   return a.start_date > b.start_date ? 1 : -1;
 }
 
+function filterActivitiesWithMap(activity: any) {
+  return !!activity.map.summary_polyline;
+}
+
 export async function fetchAthleteActivities(
   token: string,
   { activityCount }: { activityCount: number },
@@ -61,7 +65,7 @@ export async function fetchAthleteActivitiesFromDate(token: string, fromDate: Da
     throw Error(`fetchActivities failed: ${response.statusText}`);
   }
   const activities = await response.json();
-  return activities.sort(sortActivitiesByDate);
+  return activities.filter(filterActivitiesWithMap).sort(sortActivitiesByDate);
 }
 
 export async function fetchActivity(token: string, activityId: string): Promise<any> {
